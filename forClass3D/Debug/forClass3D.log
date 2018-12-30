@@ -1,0 +1,18 @@
+﻿  Cube.cpp
+  Data.cpp
+  display.cpp
+  Location.cpp
+  main.cpp
+c:\code\school\graphics\graphics_3\forclass3d\inputmanager.h(140): warning C4101: 'y': unreferenced local variable
+c:\code\school\graphics\graphics_3\forclass3d\inputmanager.h(139): warning C4101: 'x': unreferenced local variable
+c:\code\school\graphics\graphics_3\forclass3d\inputmanager.h(173): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\code\school\graphics\graphics_3\forclass3d\inputmanager.h(174): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  RCube.cpp
+c:\code\school\graphics\graphics_3\forclass3d\rcube.cpp(17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  texture.cpp
+c:\code\school\graphics\graphics_3\forclass3d\texture.cpp(21): warning C4838: conversion from 'int' to 'GLenum' requires a narrowing conversion
+  Wall.cpp
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+glew32sd.lib(glew.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'glew32sd.lib(glew.obj)' or at 'C:\Code\School\Graphics\Graphics_3\Debug\vc110.pdb'; linking object as if no debug info
+  forClass3D.vcxproj -> C:\Code\School\Graphics\Graphics_3\Debug\forClass3D.exe
