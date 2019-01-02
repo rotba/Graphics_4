@@ -8,7 +8,6 @@
 #include <glm/gtx/transform.hpp>
 
 
-
 using namespace glm;
 
 int main(int argc, char** argv)
@@ -68,8 +67,8 @@ int main(int argc, char** argv)
 	                          };
     Mesh mesh(vertices, sizeof(vertices)/sizeof(vertices[0]), indices, sizeof(indices)/sizeof(indices[0]));
 	Shader shader("./res/shaders/basicShader");
-	RCube rcube(3, &mesh, &shader);
-	Data data(&rcube, &display);
+	Scene scene(&mesh, &shader);
+	Data data(&scene, &display);
 	Texture tex("./res/textures/plane.png");
 	tex.Bind(0);
 	glfwSetWindowUserPointer(display.m_window, (void *)&data);
@@ -78,10 +77,9 @@ int main(int argc, char** argv)
 	glfwSetCursorPosCallback(display.m_window, cursor_callback);
 	glfwSetScrollCallback(display.m_window, scroll_callback);
 	display.Clear(1.0f, 1.0f, 1.0f, 1.0f);
-	rcube.render();
+	scene.render();
 	display.SwapBuffers();
 	int i = 0;
-	rcube.render();
 	glfwSetInputMode(display.m_window, GLFW_STICKY_KEYS, 0);
 	while (!glfwWindowShouldClose(display.m_window))
 	{

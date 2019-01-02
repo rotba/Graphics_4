@@ -1,13 +1,13 @@
 #include "display.h"
 #include "glm\glm.hpp"
-#include "RCube.h"
+#include "Scene.h"
 
 class Data
 {
 public:
-	Data(RCube* rcube, Display* display);
+	Data(Scene* scene, Display* display);
 
-	RCube* _rcube;
+	Scene* _scene;
 	Display* _display;
 	bool _l_button;
 	bool _r_button;

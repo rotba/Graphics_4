@@ -1,8 +1,8 @@
 #include "Data.h"
 
-Data::Data(RCube* rcube, Display* display)
+Data::Data(Scene* scene, Display* display)
 {
-	_rcube = rcube;
+	_scene = scene;
 	_display = display;
 	_l_button = false;
 	_r_button = false;

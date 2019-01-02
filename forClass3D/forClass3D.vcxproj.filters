@@ -24,9 +24,6 @@
     <ClInclude Include="inputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RCube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -42,15 +39,27 @@
     <ClInclude Include="texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Arm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Joint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="display.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RCube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
@@ -66,6 +75,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Joint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Arm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

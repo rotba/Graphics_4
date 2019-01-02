@@ -15,124 +15,75 @@
 		case GLFW_KEY_R:
 			if (action == GLFW_PRESS) {
 				Sleep(10);
-				data->_rcube->rotateRWall();
+				//data->_data->rotateRWall();
 				data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-				data->_rcube->render();
+				data->_scene->render();
 				data->_display->SwapBuffers();
 			}
 			break;
 		case GLFW_KEY_L:
 			if (action == GLFW_PRESS) {
-				data->_rcube->rotateLWall();
+				//data->_data->rotateLWall();
 				data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-				data->_rcube->render();
+				data->_scene->render();
 				data->_display->SwapBuffers();
 				Sleep(10);
 			}
 			break;
 		case GLFW_KEY_U:
 			if (action == GLFW_PRESS) {
-				data->_rcube->rotateUWall();
+				//data->_rcube->rotateUWall();
 				data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-				data->_rcube->render();
+				data->_scene->render();
 				data->_display->SwapBuffers();
 				Sleep(10);
 			}
 			break;
 		case GLFW_KEY_D:
 			if (action == GLFW_PRESS) {
-				data->_rcube->rotateDWall();
+				//data->_rcube->rotateDWall();
 				data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-				data->_rcube->render();
+				data->_scene->render();
 				data->_display->SwapBuffers();
 				Sleep(10);
 			}
 			break;
 		case GLFW_KEY_B:
 			if (action == GLFW_PRESS) {
-				data->_rcube->rotateBWall();
+				//data->_rcube->rotateBWall();
 				data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-				data->_rcube->render();
+				data->_scene->render();
 				data->_display->SwapBuffers();
 				Sleep(10);
 			}
 			break;
 		case GLFW_KEY_F:
 			if (action == GLFW_PRESS) {
-				data->_rcube->rotateFWall();
+				//data->_rcube->rotateFWall();
 				data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-				data->_rcube->render();
+				data->_scene->render();
 				data->_display->SwapBuffers();
 				Sleep(10);
 			}
 			break;
 		case GLFW_KEY_Z:
 			if (action == GLFW_PRESS) {
-				data->_rcube->halfAngle();
+				//data->_rcube->halfAngle();
 			}
 			break;
 		case GLFW_KEY_A:
 			if (action == GLFW_PRESS) {
-				data->_rcube->doubleAngle();
+				//data->_rcube->doubleAngle();
 			}
 			break;
 		case GLFW_KEY_SPACE:
 			if (action == GLFW_PRESS) {
-				data->_rcube->reverseRotaion();
+				//data->_rcube->reverseRotaion();
 			}
 			break;
 		default:
 			break;
 		}
-
-		/*int state = glfwGetKey(window, GLFW_KEY_L);
-		if (state == GLFW_PRESS) {
-			Sleep(10);
-			data->_rcube->rotateRWall();
-			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-			data->_rcube->render();
-			data->_display->SwapBuffers();
-		}
-		state = glfwGetKey(window, GLFW_KEY_L);
-		if (state == GLFW_PRESS) {
-			Sleep(10);
-			data->_rcube->rotateLWall();
-			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-			data->_rcube->render();
-			data->_display->SwapBuffers();
-		}
-		state = glfwGetKey(window, GLFW_KEY_U);
-		if (state == GLFW_PRESS) {
-			Sleep(10);
-			data->_rcube->rotateUWall();
-			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-			data->_rcube->render();
-			data->_display->SwapBuffers();
-		}
-		state = glfwGetKey(window, GLFW_KEY_D);
-		if (state == GLFW_PRESS) {
-			Sleep(10);
-			data->_rcube->rotateDWall();
-			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-			data->_rcube->render();
-			data->_display->SwapBuffers();
-		}
-		state = glfwGetKey(window, GLFW_KEY_B);
-		if (state == GLFW_PRESS) {
-			Sleep(10);
-			data->_rcube->rotateBWall();
-			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-			data->_rcube->render();
-			data->_display->SwapBuffers();
-		}
-		state = glfwGetKey(window, GLFW_KEY_F);
-		if (state == GLFW_PRESS) {
-			Sleep(10);
-			data->_rcube->rotateFWall();
-			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-			data->_rcube->render();
-			data->_display->SwapBuffers();
-		}*/
 	}
 	static void mouse_callback(GLFWwindow* window, int button, int action, int mods)
 	{
@@ -164,16 +115,16 @@
 		data->_curr_x = xpos;
 		data->_curr_y = ypos;
 		if (data->_r_button) {
-			data->_rcube->translateRCube(vec3(move_x*factor, move_y*factor, 0));
+			//data->_rcube->translateRCube(vec3(move_x*factor, move_y*factor, 0));
 			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-			data->_rcube->render();
+			data->_scene->render();
 			data->_display->SwapBuffers();
 		}
 		if (data->_l_button) {
-			data->_rcube->rotateRCube(move_y*0.2, vec3(1, 0, 0));
-			data->_rcube->rotateRCube(move_x*0.2, vec3(0, -1, 0));
+			//data->_rcube->rotateRCube(move_y*0.2, vec3(1, 0, 0));
+			//data->_rcube->rotateRCube(move_x*0.2, vec3(0, -1, 0));
 			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-			data->_rcube->render();
+			data->_scene->render();
 			data->_display->SwapBuffers();
 		}
 	}
@@ -182,9 +133,9 @@
 		double factor = 0.2;
 		Data *data;
 		data = (Data *)glfwGetWindowUserPointer(window);
-		data->_rcube->translateRCube(vec3(0, 0, yoffset*factor));
+		//data->_rcube->translateRCube(vec3(0, 0, yoffset*factor));
 		data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-		data->_rcube->render();
+		data->_scene->render();
 		data->_display->SwapBuffers();
 	}
 
