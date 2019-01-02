@@ -11,3 +11,8 @@ mat4 Box::getM()
 {
 	return _S*_T*_R;
 }
+
+vec3 Box::getCenter()
+{
+	return (vec3)(getMVP() * vec4(0, 0, 0, 1));
+}

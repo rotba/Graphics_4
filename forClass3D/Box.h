@@ -10,6 +10,7 @@ public:
 
 	mat4 getMVP();
 	mat4 getM();
+	vec3 getCenter();
 	void translateBox(vec3 transVec);
 	void tranformBox(mat4 mat);
 	void scaleBox(float scaleFactor);

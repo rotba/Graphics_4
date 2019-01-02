@@ -9,6 +9,7 @@ public:
 	Arm(mat4 P, mat4 T);
 	mat4 getT();
 	void render(Mesh* mesh, Shader* shader);
+	vec3 getEnd();
 	Joint _joint_0;
 	Joint _joint_1;
 	Joint _joint_2;

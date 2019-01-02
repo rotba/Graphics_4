@@ -23,3 +23,8 @@ void Arm::render(Mesh * mesh, Shader * shader)
 	shader->Update(_joint_3.getMVP(), _joint_3.getM());
 	mesh->Draw();
 }
+
+vec3 Arm::getEnd()
+{
+	return (_joint_0.getEnd());
+}

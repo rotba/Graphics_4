@@ -19,35 +19,31 @@ mat4 Joint::getPrev()
 
 mat4 Joint::getM()
 {
-	return _Tarm*getPrevR()*_Thight*_R*_S;
+	return _Tarm*getPrev()*_Thight*_R*_S;
 }
 
-mat4 Joint::getPrevR()
+vec3 Joint::getRoot()
 {
-	if (_prev == nullptr) {
-		return mat4(1);
-	}
-	else {
-		return (_prev->getR());
-	}
+	return (vec3)(getMVP() * vec4(0, 0, -2, 1));
 }
 
-mat4 Joint::getR()
+vec3 Joint::getEnd()
 {
-	if (_prev ==nullptr) {
-		return _R;
-	}
-	else {
-		return (_prev->getR())*_R;
-	}
+	return (vec3)(getMVP() * vec4(0, 0, 2, 1));
 }
+
+void Joint::rotate(float a, vec3 axis)
+{
+	_R = _R * (glm::rotate(a, axis));
+}
+
 
 void Joint::rotateX(bool clockwise, float angle)
 {
-	_R = _R * rotate(angle, vec3(1,0,0));
+	_R = _R * (glm::rotate(angle, vec3(1,0,0)));
 }
 
 void Joint::rotateZ(bool clockwise, float angle)
 {
-	_R = rotate(angle, vec3(0, 0, -1))*_R;
+	_R = (glm::rotate(angle, vec3(0, 0, -1)))*_R;
 }

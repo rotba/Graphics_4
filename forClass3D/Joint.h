@@ -11,8 +11,9 @@ public:
 	mat4 getMVP();
 	mat4 getPrev();
 	mat4 getM();
-	mat4 getPrevR();
-	mat4 getR();
+	vec3 getRoot();
+	vec3 getEnd();
+	void rotate(float a, vec3 axis);
 	void rotateX(bool clockwise, float angle);
 	void rotateZ(bool clockwise, float angle);
 private:
