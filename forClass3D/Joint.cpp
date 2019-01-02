@@ -1,12 +1,20 @@
 #include "Joint.h"
 
-
-Joint::Joint(Joint* prev, mat4 Thight, mat4 Tarm, mat4 P): _prev(prev), _Thight(Thight), _Tarm(Tarm),_S(scale(vec3(1.0f, 1.0f, 2.0f))), _P(P){}
-
+Joint::Joint(Joint* prev, mat4 Tarm, mat4 P): _prev(prev), _Thight(translate(vec3(0,0,-4 ))), _Tarm(Tarm),_S(scale(vec3(1.0f, 1.0f, 2.0f))), _P(P){}
 mat4 Joint::getMVP()
 {
 	mat4 base = translate(vec3(0,0,-1));
-	return _P*_Tarm*getPrevR()*_Thight*_R*_S*base;
+	return _P*_Tarm*getPrev()*_R*_S*base;
+}
+
+mat4 Joint::getPrev()
+{
+	if (_prev ==nullptr) {
+		return mat4(1);
+	}
+	else {
+		return _prev->getPrev()*_prev->_R*_Thight;
+	}
 }
 
 mat4 Joint::getM()

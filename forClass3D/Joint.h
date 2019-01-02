@@ -7,8 +7,9 @@ using namespace glm;
 class Joint
 {
 public:
-	Joint(Joint* prev ,mat4 Theight, mat4 Tarm, mat4 _P);
+	Joint(Joint* prev , mat4 Tarm, mat4 P);
 	mat4 getMVP();
+	mat4 getPrev();
 	mat4 getM();
 	mat4 getPrevR();
 	mat4 getR();
