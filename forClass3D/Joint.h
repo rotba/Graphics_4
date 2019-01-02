@@ -12,6 +12,8 @@ public:
 	mat4 getM();
 	mat4 getPrevR();
 	mat4 getR();
+	void rotateX(bool clockwise, float angle);
+	void rotateZ(bool clockwise, float angle);
 private:
 	mat4 _R;
 	mat4 _Thight;

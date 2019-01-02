@@ -3,9 +3,9 @@ Arm::Arm(mat4 P, mat4 T) :
 	_T(T),
 	_P(P),
 	_joint_0(nullptr, translate(vec3(0, 0, 0)), translate(vec3(0, 0, 0)), P),
-	_joint_1(&_joint_0, translate(vec3(0, 0, -2)), translate(vec3(0, 0, 0)), P),
-	_joint_2(&_joint_1, translate(vec3(0, 0, -4)), translate(vec3(0, 0, 0)), P),
-	_joint_3(&_joint_2, translate(vec3(0, 0, -6)), translate(vec3(0, 0, 0)), P){}
+	_joint_1(&_joint_0, translate(vec3(0, 0, -4)), translate(vec3(0, 0, 0)), P),
+	_joint_2(&_joint_1, translate(vec3(0, 0, -8)), translate(vec3(0, 0, 0)), P),
+	_joint_3(&_joint_2, translate(vec3(0, 0, -12)), translate(vec3(0, 0, 0)), P){}
 
 mat4 Arm::getT()
 {

@@ -1,25 +1,26 @@
 #include "Joint.h"
 
 
-Joint::Joint(Joint* prev, mat4 Thight, mat4 Tarm, mat4 P): _prev(prev), _Thight(Thight), _Tarm(Tarm),_S(mat4(1)), _P(P){}
+Joint::Joint(Joint* prev, mat4 Thight, mat4 Tarm, mat4 P): _prev(prev), _Thight(Thight), _Tarm(Tarm),_S(scale(vec3(1.0f, 1.0f, 2.0f))), _P(P){}
 
 mat4 Joint::getMVP()
 {
-	return _P*_S*_Tarm*getPrevR()*_Thight*_R;
+	mat4 base = translate(vec3(0,0,-1));
+	return _P*_Tarm*getPrevR()*_Thight*_R*_S*base;
 }
 
 mat4 Joint::getM()
 {
-	return _S * _Tarm*getPrevR()*_Thight*_R;
+	return _Tarm*getPrevR()*_Thight*_R*_S;
 }
 
 mat4 Joint::getPrevR()
 {
 	if (_prev == nullptr) {
-		return _R;
+		return mat4(1);
 	}
 	else {
-		return (_prev->getR())*_R;
+		return (_prev->getR());
 	}
 }
 
@@ -31,4 +32,14 @@ mat4 Joint::getR()
 	else {
 		return (_prev->getR())*_R;
 	}
+}
+
+void Joint::rotateX(bool clockwise, float angle)
+{
+	_R = _R * rotate(angle, vec3(1,0,0));
+}
+
+void Joint::rotateZ(bool clockwise, float angle)
+{
+	_R = rotate(angle, vec3(0, 0, -1))*_R;
 }

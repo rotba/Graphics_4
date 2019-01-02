@@ -81,10 +81,39 @@ int main(int argc, char** argv)
 	display.SwapBuffers();
 	int i = 0;
 	glfwSetInputMode(display.m_window, GLFW_STICKY_KEYS, 0);
-	while (!glfwWindowShouldClose(display.m_window))
+	while (!glfwWindowShouldClose(display.m_window) && i <200)
 	{
+		Sleep(30);
+		display.Clear(1.0f, 1.0f, 1.0f, 1.0f);
+		scene._arm._joint_1.rotateX(true, 0.4);
+		scene.render();
+		display.SwapBuffers();
 		glfwPollEvents();
+		i++;
 	}
+	i = 0;
+	while (!glfwWindowShouldClose(display.m_window) && i < 200)
+	{
+		Sleep(3);
+		display.Clear(1.0f, 1.0f, 1.0f, 1.0f);
+		scene._arm._joint_1.rotateZ(true, 0.4);
+		scene.render();
+		display.SwapBuffers();
+		glfwPollEvents();
+		i++;
+	}
+	i = 0;
+	while (!glfwWindowShouldClose(display.m_window) && i < 200)
+	{
+		Sleep(3);
+		display.Clear(1.0f, 1.0f, 1.0f, 1.0f);
+		scene._arm._joint_1.rotateX(true, 0.4);
+		scene.render();
+		display.SwapBuffers();
+		glfwPollEvents();
+		i++;
+	}
+	i = 0;
 
 	return 0;
 }
