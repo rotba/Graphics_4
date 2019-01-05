@@ -1,6 +1,3 @@
-﻿  main.cpp
+﻿  Scene.cpp
 c:\code\school\graphics\graphics_4\forclass3d\scene.h(15): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\code\school\graphics\graphics_4\forclass3d\inputmanager.h(104): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
-c:\code\school\graphics\graphics_4\forclass3d\inputmanager.h(116): warning C4101: 'y': unreferenced local variable
-c:\code\school\graphics\graphics_4\forclass3d\inputmanager.h(115): warning C4101: 'x': unreferenced local variable
   forClass3D.vcxproj -> C:\Code\School\Graphics\Graphics_4\Debug\forClass3D.exe

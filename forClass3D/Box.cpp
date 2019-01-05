@@ -14,7 +14,7 @@ mat4 Box::getM()
 
 vec3 Box::getCenter()
 {
-	return (vec3)(getMVP() * vec4(0, 0, 0, 1));
+	return (vec3)(getM() * vec4(0, 0, 0, 1));
 }
 
 void Box::setPickingColor(vec4 picking_color)

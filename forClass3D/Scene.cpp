@@ -1,7 +1,6 @@
 #include "Scene.h"
 #include <iostream>
 
-using namespace glm;
 Scene::Scene(Mesh* cube_mesh, Mesh* rf_mesh, Shader* shader, Shader* picking_shader, Texture* cube_tex, Texture* box_tex):
 	_camera(UP, FORWARD,POSITION, CENTER, perspective(60.0f, (float)DISPLAY_WIDTH / (float)DISPLAY_HEIGHT, 0.1f, 100.0f)),
 	_arm(_camera.getLookAt(), mat4(1)),
@@ -47,18 +46,34 @@ void Scene::solve()
 	joints[2] = &_arm._joint_2;
 	joints[3] = &_arm._joint_3;
 	vec3 D = _box.getCenter();
-	while (distance(_arm.getEnd(), D)>= EPSILON)
-	{
-		for (int i = 0 ; i < 4; i++)
-		{
-			vec3 R = joints[i]->getRoot();
-			vec3 E = joints[i]->getEnd();
-			vec3 RD = normalize(D-R);
-			vec3 RE = normalize(E - R);
-			float a = dot(RD, RE);
-			vec3 axis = cross(RD, -RE);
-			//joints[i]->rotate(a, axis);
-		}
+	vec3 R = joints[curr_joint]->getRoot();
+	vec3 E = _arm.getEnd();
+	std::cout << E.x << std::endl;
+	std::cout << E.y << std::endl;
+	std::cout << E.z << std::endl << std::endl;
+	vec3 RD = normalize(D-R);
+	vec3 RE = normalize(E-R);
+	float a = acos(dot(RD, RE));
+	vec3 axis = cross(RD, -RE);
+	if (EULER) {
+		float theta = a;
+		joints[curr_joint]->rotateX(true, theta);
+		vec3 tmp = normalize(_arm.getEnd() - R);
+		vec3 tmp_proj = vec3(tmp.x,tmp.y,0);
+		//vec3 projected_RE = normalize(vec3(RE.x, RE.y, 0));
+		vec3 projected_RD = normalize(vec3(RD.x, RD.y, 0));
+		float phi = acos(dot(projected_RD, tmp_proj));
+		joints[curr_joint]->rotateZ(true, phi);
+
+	}
+	else {
+		joints[curr_joint]->rotate(a, axis);
+	}
+	if (curr_joint == 0) {
+		curr_joint = 3;
+	}
+	else {
+		curr_joint -=1;
 	}
 }
 
@@ -90,11 +105,17 @@ void Scene::printPickedObject(int picked_id)
 		std::cout << "BACKGROUND" << std::endl;
 		break;
 	}
-	/*if (pc == J0_PC) std::cout << "J0" << std::endl;
-	else if (pc == J1_PC) std::cout << "J1" << std::endl;
-	else if (pc == J2_PC) std::cout << "J2" << std::endl;
-	else if (pc == J3_PC) std::cout << "J3" << std::endl;
-	else if (pc == BOX_PC) std::cout << "BOX" << std::endl;*/
+}
+
+bool Scene::isDone()
+{
+	vec3 D = _box.getCenter();
+	return distance(_arm.getEnd(), D)>=EPSILON;
+}
+
+void Scene::setEuler()
+{
+	EULER = !EULER;
 }
 
 Scene::~Scene()

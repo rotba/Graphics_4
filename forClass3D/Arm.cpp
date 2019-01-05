@@ -38,5 +38,5 @@ void Arm::pickingRender(Mesh * cube_mesh, Mesh * rf_mesh, Shader * shader)
 
 vec3 Arm::getEnd()
 {
-	return (_joint_0.getEnd());
+	return (_joint_3.getEnd());
 }

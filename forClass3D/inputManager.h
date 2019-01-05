@@ -16,22 +16,20 @@ using namespace std;
 			if(action == GLFW_PRESS)
 				glfwSetWindowShouldClose(window,GLFW_TRUE);
 			break;
-		case GLFW_KEY_R:
+		case GLFW_KEY_SPACE:
 			if (action == GLFW_PRESS) {
-				Sleep(10);
-				//data->_data->rotateRWall();
-				data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-				data->_scene->render();
-				data->_display->SwapBuffers();
+				while (data->_scene->isDone()) {
+					data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
+					data->_scene->solve();
+					data->_scene->render();
+					data->_display->SwapBuffers();
+					data->_scene->updatePickingShader();
+				}
 			}
 			break;
-		case GLFW_KEY_L:
+		case GLFW_KEY_E:
 			if (action == GLFW_PRESS) {
-				//data->_data->rotateLWall();
-				data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-				data->_scene->render();
-				data->_display->SwapBuffers();
-				Sleep(10);
+				data->_scene->setEuler();
 			}
 			break;
 		case GLFW_KEY_U:
@@ -78,11 +76,6 @@ using namespace std;
 		case GLFW_KEY_A:
 			if (action == GLFW_PRESS) {
 				//data->_rcube->doubleAngle();
-			}
-			break;
-		case GLFW_KEY_SPACE:
-			if (action == GLFW_PRESS) {
-				//data->_rcube->reverseRotaion();
 			}
 			break;
 		default:

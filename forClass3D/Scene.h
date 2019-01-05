@@ -13,6 +13,7 @@ static const vec3 FORWARD = vec3(0, 1, 0);
 static const vec3 POSITION = vec3(0, -30, 0);
 static const vec3 CENTER = vec3(0, 0, -5);
 static const float EPSILON = 0.3;
+static float EULER = false;
 static vec4 J0_PC;
 static vec4 J1_PC;
 static vec4 J2_PC;
@@ -39,6 +40,8 @@ public:
 	Camera* getCamera();
 	mat4 getT();
 	void printPickedObject(int picked_id);
+	bool isDone();
+	void setEuler();
 	Camera _camera;
 	Arm _arm;
 	Box _box;
@@ -52,4 +55,5 @@ private:
 	Texture* _box_tex;
 	Shader* _shader;
 	Shader* _picking_shader;
+	int curr_joint = 3;
 };
