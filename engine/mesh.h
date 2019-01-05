@@ -45,6 +45,7 @@ public:
 	Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices);
 
 	void Draw();
+	void DrawLines();
 
 	virtual ~Mesh();
 protected:

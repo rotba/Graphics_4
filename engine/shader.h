@@ -11,12 +11,15 @@ public:
 
 	void Bind();
 	void Update(glm::mat4 MVP,glm::mat4 Normal);
+	void SetPickingColor(glm::vec4 p_color);
+	void clear();
+	void flush();
 
 	virtual ~Shader();
 protected:
 private:
 	static const unsigned int NUM_SHADERS = 2;
-	static const unsigned int NUM_UNIFORMS = 5;
+	static const unsigned int NUM_UNIFORMS = 6;
 	void operator=(const Shader& shader) {}
 	Shader(const Shader& shader) {}
 	

@@ -80,3 +80,14 @@ void Mesh::Draw()
 
 	glBindVertexArray(0);
 }
+
+void Mesh::DrawLines()
+{
+	glBindVertexArray(m_vertexArrayObject);
+
+	//glDrawElements(GL_TRIANGLES, m_numIndices, GL_UNSIGNED_INT, 0);
+	glLineWidth(3);
+	glDrawElementsBaseVertex(GL_LINES, m_numIndices, GL_UNSIGNED_INT, 0, 0);
+
+	glBindVertexArray(0);
+}

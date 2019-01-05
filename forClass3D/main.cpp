@@ -14,9 +14,9 @@ int main(int argc, char** argv)
 {
 	Display display(DISPLAY_WIDTH, DISPLAY_HEIGHT, "OpenGL");
 	
-	Vertex vertices[] =
+	Vertex cube_vertices[] =
 	{
-				Vertex(glm::vec3(-1, -1, -1), glm::vec2(1, 0), glm::vec3(0, 0, -1),glm::vec3(0, 0, 1)),
+		Vertex(glm::vec3(-1, -1, -1), glm::vec2(1, 0), glm::vec3(0, 0, -1),glm::vec3(0, 0, 1)),
 		Vertex(glm::vec3(-1, 1, -1), glm::vec2(0, 0), glm::vec3(0, 0, -1),glm::vec3(0, 0, 1)),
 		Vertex(glm::vec3(1, 1, -1), glm::vec2(0, 1), glm::vec3(0, 0, -1),glm::vec3(0, 0, 1)),
 		Vertex(glm::vec3(1, -1, -1), glm::vec2(1, 1), glm::vec3(0, 0, -1),glm::vec3(0, 0, 1)),
@@ -47,7 +47,18 @@ int main(int argc, char** argv)
 		Vertex(glm::vec3(1, 1, -1), glm::vec2(0, 1), glm::vec3(1, 0, 0),glm::vec3(0.410,0.112,0.374))
 	};
 
-	unsigned int indices[] = {0, 1, 2,
+	Vertex reference_frame_vertices[] =
+	{
+		Vertex(glm::vec3(-10, 0, 0), glm::vec2(1, 0), glm::vec3(0, 0, -1),glm::vec3(0, 0, 0)),
+		Vertex(glm::vec3(10, 0, 0), glm::vec2(0, 0), glm::vec3(0, 0, -1),glm::vec3(0, 0, 0)),
+		Vertex(glm::vec3(0, 10, 0), glm::vec2(0, 1), glm::vec3(0, 0, -1),glm::vec3(0, 0, 0)),
+		Vertex(glm::vec3(0, -10, 0), glm::vec2(1, 1), glm::vec3(0, 0, -1),glm::vec3(0, 0, 0)),
+		Vertex(glm::vec3(0, 0, 10), glm::vec2(1, 0), glm::vec3(0, 0, 1),glm::vec3(0, 0, 0)),
+		Vertex(glm::vec3(0, 0, -10), glm::vec2(0, 0), glm::vec3(0, 0, 1),glm::vec3(0, 0, 0))
+	};
+
+	unsigned int cube_indices[] = {
+							  0, 1, 2,
 							  0, 2, 3,
 
 							  6, 5, 4,
@@ -65,31 +76,44 @@ int main(int argc, char** argv)
 							  22, 21, 20,
 							  23, 22, 20
 	                          };
-    Mesh mesh(vertices, sizeof(vertices)/sizeof(vertices[0]), indices, sizeof(indices)/sizeof(indices[0]));
+	unsigned int reference_frame_indices[] = {
+							  0, 1, 0,
+							  0, 1, 0,
+
+							  2, 3, 2,
+							  2, 3, 2,
+
+							  4, 5, 4,
+							  4, 5, 4
+	};
+    Mesh cube_mesh(cube_vertices, sizeof(cube_vertices)/sizeof(cube_vertices[0]), cube_indices, sizeof(cube_indices)/sizeof(cube_indices[0]));
+	Mesh referene_frame_mesh(reference_frame_vertices, sizeof(reference_frame_vertices) / sizeof(reference_frame_vertices[0]), reference_frame_indices, sizeof(reference_frame_indices) / sizeof(reference_frame_indices[0]));
 	Shader shader("./res/shaders/basicShader");
-	Scene scene(&mesh, &shader);
-	Data data(&scene, &display);
-	Texture tex("./res/textures/plane.png");
-	tex.Bind(0);
+	Shader picking_shader("./res/shaders/Picking");
+	Texture tex_cube("./res/textures/plane.png");
+	Texture tex_box("./res/textures/box0.bmp");
+	Scene scene(&cube_mesh, &referene_frame_mesh, &shader, &picking_shader, &tex_cube, &tex_box);
+	Data data(&scene, &display, &picking_shader);
 	glfwSetWindowUserPointer(display.m_window, (void *)&data);
 	glfwSetKeyCallback(display.m_window, key_callback);
-	glfwSetMouseButtonCallback(display.m_window, mouse_callback);
-	glfwSetCursorPosCallback(display.m_window, cursor_callback);
+	//glfwSetMouseButtonCallback(display.m_window, mouse_callback);
+	glfwSetCursorPosCallback(display.m_window, cursor_position_callback);
 	glfwSetScrollCallback(display.m_window, scroll_callback);
 	display.Clear(1.0f, 1.0f, 1.0f, 1.0f);
 	scene.render();
 	display.SwapBuffers();
-	display.Clear(1.0f, 1.0f, 1.0f, 1.0f);
-	scene.solve();
-	display.SwapBuffers();
 	int i = 0;
 	glfwSetInputMode(display.m_window, GLFW_STICKY_KEYS, 0);
+	display.Clear(1.0f, 1.0f, 1.0f, 1.0f);
+	scene._arm._joint_0.rotateX(true, 45);
+	scene._arm._joint_0.rotateZ(true, 25);
+	//scene._arm._joint_0.rotateZ(false, 25);
+	scene.render();
+	display.SwapBuffers();
 	while (!glfwWindowShouldClose(display.m_window))
 	{
 		glfwPollEvents();
 	}
-	i = 0;
-
 	return 0;
 }
 

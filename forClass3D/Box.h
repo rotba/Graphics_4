@@ -11,6 +11,8 @@ public:
 	mat4 getMVP();
 	mat4 getM();
 	vec3 getCenter();
+	void setPickingColor(vec4 picking_color);
+	vec4 getPickingColor();
 	void translateBox(vec3 transVec);
 	void tranformBox(mat4 mat);
 	void scaleBox(float scaleFactor);
@@ -19,4 +21,5 @@ private:
 	mat4 _R;
 	mat4 _T;
 	mat4 _S;
+	vec4 _picking_color;
 };

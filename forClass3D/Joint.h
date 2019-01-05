@@ -13,6 +13,8 @@ public:
 	mat4 getM();
 	vec3 getRoot();
 	vec3 getEnd();
+	void setPickingColor(vec4 pickingColor);
+	vec4 getPickingColor();
 	void rotate(float a, vec3 axis);
 	void rotateX(bool clockwise, float angle);
 	void rotateZ(bool clockwise, float angle);
@@ -22,5 +24,6 @@ private:
 	mat4 _S;
 	mat4 _Tarm;
 	mat4 _P;
+	vec4 _picking_color;
 	Joint* _prev;
 };

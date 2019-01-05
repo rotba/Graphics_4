@@ -32,18 +32,30 @@ vec3 Joint::getEnd()
 	return (vec3)(getMVP() * vec4(0, 0, 2, 1));
 }
 
+void Joint::setPickingColor(vec4 pickingColor)
+{
+	_picking_color = pickingColor;
+}
+
+vec4 Joint::getPickingColor()
+{
+	return _picking_color;
+}
+
 void Joint::rotate(float a, vec3 axis)
 {
 	_R = _R * (glm::rotate(a, axis));
 }
 
 
-void Joint::rotateX(bool clockwise, float angle)
+void Joint::rotateX(bool anti_clockwise, float angle)
 {
-	_R = _R * (glm::rotate(angle, vec3(1,0,0)));
+	int anti_clockwise_factor = anti_clockwise ? 1 : -1;
+	_R = _R * (glm::rotate(angle, vec3(1* anti_clockwise_factor,0,0)));
 }
 
-void Joint::rotateZ(bool clockwise, float angle)
+void Joint::rotateZ(bool anti_clockwise, float angle)
 {
-	_R = (glm::rotate(angle, vec3(0, 0, -1)))*_R;
+	int anti_clockwise_factor = anti_clockwise ? 1 : -1;
+	_R = (glm::rotate(angle, vec3(0, 0, -1* anti_clockwise_factor)))*_R;
 }

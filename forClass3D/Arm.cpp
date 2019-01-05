@@ -5,23 +5,35 @@ Arm::Arm(mat4 P, mat4 T) :
 	_joint_0(nullptr, translate(vec3(0, 0, 0)), P),
 	_joint_1(&_joint_0, translate(vec3(0, 0, 0)), P),
 	_joint_2(&_joint_1, translate(vec3(0, 0, 0)), P),
-	_joint_3(&_joint_2, translate(vec3(0, 0, 0)), P){}
+	_joint_3(&_joint_2, translate(vec3(0, 0, 0)), P),
+	_joints{&_joint_0,&_joint_1,&_joint_2,&_joint_3}{}
 
 mat4 Arm::getT()
 {
 	return _T;
 }
 
-void Arm::render(Mesh * mesh, Shader * shader)
+void Arm::render(Mesh * cube_mesh, Mesh * rf_mesh, Shader * shader)
 {
-	shader->Update(_joint_0.getMVP(), _joint_0.getM());
-	mesh->Draw();
-	shader->Update(_joint_1.getMVP(), _joint_1.getM());
-	mesh->Draw();
-	shader->Update(_joint_2.getMVP(), _joint_2.getM());
-	mesh->Draw();
-	shader->Update(_joint_3.getMVP(), _joint_3.getM());
-	mesh->Draw();
+	for each (Joint* j in _joints)
+	{
+		shader->Update(j->getMVP(), j->getM());
+		cube_mesh->Draw();
+		if (j != &_joint_3) {
+			shader->Update(j->getMVP()*translate(vec3(0, 0, -1))*scale(vec3(0.5, 0.5, 0.5)), j->getM()*translate(vec3(0, 0, -1))*scale(vec3(0.5, 0.5, 0.5)));
+			rf_mesh->DrawLines();
+		}
+	}
+}
+
+void Arm::pickingRender(Mesh * cube_mesh, Mesh * rf_mesh, Shader * shader)
+{
+	for each (Joint* j in _joints)
+	{
+		shader->Update(j->getMVP(), j->getM());
+		shader->SetPickingColor(j->getPickingColor());
+		cube_mesh->Draw();
+	}
 }
 
 vec3 Arm::getEnd()

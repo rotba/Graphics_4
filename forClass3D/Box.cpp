@@ -16,3 +16,13 @@ vec3 Box::getCenter()
 {
 	return (vec3)(getMVP() * vec4(0, 0, 0, 1));
 }
+
+void Box::setPickingColor(vec4 picking_color)
+{
+	_picking_color = picking_color;
+}
+
+vec4 Box::getPickingColor()
+{
+	return _picking_color;
+}
