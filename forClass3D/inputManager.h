@@ -108,7 +108,8 @@ using namespace std;
 				buff[2] * 256 * 256;
 			data->_scene->printPickedObject(pickedID);
 		}
-	}
+	}
+
 	static void mouse_callback(GLFWwindow* window, int button, int action, int mods)
 	{
 		double x;

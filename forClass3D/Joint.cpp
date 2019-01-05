@@ -4,7 +4,7 @@ Joint::Joint(Joint* prev, mat4 Tarm, mat4 P): _prev(prev), _Thight(translate(vec
 mat4 Joint::getMVP()
 {
 	mat4 base = translate(vec3(0,0,-1));
-	return _P*_Tarm*getPrev()*_R*_S*base;
+	return _P*_Tarm*getPrev()*_Rpsi*_Rtheta*_Rphi*_S*base;
 }
 
 mat4 Joint::getPrev()
@@ -13,13 +13,13 @@ mat4 Joint::getPrev()
 		return mat4(1);
 	}
 	else {
-		return _prev->getPrev()*_prev->_R*_Thight;
+		return _prev->getPrev()*(_prev->_Rpsi*_prev->_Rtheta*_prev->_Rphi)*_Thight;
 	}
 }
 
 mat4 Joint::getM()
 {
-	return _Tarm*getPrev()*_Thight*_R*_S;
+	return _Tarm*getPrev()*_Thight*_Rpsi*_Rtheta*_Rphi*_S;
 }
 
 vec3 Joint::getRoot()
@@ -42,20 +42,17 @@ vec4 Joint::getPickingColor()
 	return _picking_color;
 }
 
-void Joint::rotate(float a, vec3 axis)
-{
-	_R = _R * (glm::rotate(a, axis));
-}
 
 
 void Joint::rotateX(bool anti_clockwise, float angle)
 {
 	int anti_clockwise_factor = anti_clockwise ? 1 : -1;
-	_R = _R * (glm::rotate(angle, vec3(1* anti_clockwise_factor,0,0)));
+	_Rtheta = glm::rotate(_Rtheta,angle, vec3(1* anti_clockwise_factor,0,0));
 }
 
 void Joint::rotateZ(bool anti_clockwise, float angle)
 {
 	int anti_clockwise_factor = anti_clockwise ? 1 : -1;
-	_R = (glm::rotate(angle, vec3(0, 0, -1* anti_clockwise_factor)))*_R;
+	_Rphi = glm::rotate(_Rphi, angle, vec3(0, 0, 1 * anti_clockwise_factor));
+	_Rpsi = glm::rotate(_Rpsi, angle, vec3(0, 0, -1 * anti_clockwise_factor));
 }

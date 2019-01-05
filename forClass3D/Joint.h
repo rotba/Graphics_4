@@ -15,11 +15,13 @@ public:
 	vec3 getEnd();
 	void setPickingColor(vec4 pickingColor);
 	vec4 getPickingColor();
-	void rotate(float a, vec3 axis);
+	//void rotate(float a, vec3 axis);
 	void rotateX(bool clockwise, float angle);
 	void rotateZ(bool clockwise, float angle);
 private:
-	mat4 _R;
+	mat4 _Rphi;
+	mat4 _Rtheta;
+	mat4 _Rpsi;
 	mat4 _Thight;
 	mat4 _S;
 	mat4 _Tarm;

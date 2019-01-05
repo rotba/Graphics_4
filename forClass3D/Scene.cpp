@@ -57,7 +57,7 @@ void Scene::solve()
 			vec3 RE = normalize(E - R);
 			float a = dot(RD, RE);
 			vec3 axis = cross(RD, -RE);
-			joints[i]->rotate(a, axis);
+			//joints[i]->rotate(a, axis);
 		}
 	}
 }
