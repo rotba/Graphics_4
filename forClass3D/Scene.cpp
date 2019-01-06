@@ -47,6 +47,7 @@ void Scene::solve()
 	joints[3] = &_arm._joint_3;
 	vec3 D = _box.getCenter();
 	vec3 R = joints[curr_joint]->getRoot();
+	vec3 E_tag = joints[curr_joint]->getEnd();
 	vec3 E = _arm.getEnd();
 	vec3 RD = normalize(D-R);
 	vec3 RE = normalize(E-R);
@@ -55,39 +56,42 @@ void Scene::solve()
 	if (EULER) {
 		float theta = 0;
 		float phi = 0;
-		//if (RD.x==0 && RD.y ==0){ 
-		//	theta =a;
-		//	joints[curr_joint]->rotateX(true, theta);
-		//}
-		//else if (RE.x == 0 && RE.y == 0) {
-		//	theta = a;
-		//	joints[curr_joint]->rotateX(true, theta/3);
-		//	vec3 RE_tag = normalize(_arm.getEnd() - R);
-		//	vec2 norm_RE_tag_xy = normalize(vec2(RE_tag.x, RE_tag.y));
-		//	vec2 norm_RD_xy = normalize(vec2(RD.x, RD.y));
-		//	phi = degrees(acos(dot(norm_RE_tag_xy, norm_RD_xy)));
-		//	joints[curr_joint]->rotateZ(true, phi);
-		//}else {
-		//	float alpha = degrees(acos(dot(RE, vec3(RE.x,RE.y,0))));
-		//	float beta = degrees(acos(dot(RD, vec3(RD.x, RD.y, 0))));
-		//	theta = alpha - beta;
-		//	/*vec2 norm_RE_xy = normalize(vec2(RE.x, RE.y));
-		//	vec2 norm_RD_xy = normalize(vec2(RD.x, RD.y));
-		//	float phi_tag = degrees(acos(dot(norm_RE_xy, norm_RD_xy)));
-		//	joints[curr_joint]->rotateZ(true, phi_tag);
-		//	vec3 RE_tag = normalize(_arm.getEnd() - R);
-		//	theta = degrees(acos(dot(RE_tag, RD)));*/
-		//	joints[curr_joint]->rotateX(true, theta/3);
-		//	vec3 RE_tag = normalize(_arm.getEnd() - R);
-		//	phi = degrees(acos(dot(RE_tag, RD)));
-		//	joints[curr_joint]->rotateZ(true, phi);
-		//}
+		if (RD.x==0 && RD.y ==0){ 
+			theta =a;
+			joints[curr_joint]->rotateX(true, theta);
+		}
+		else if (RE.x == 0 && RE.y == 0) {
+			theta = a;
+			joints[curr_joint]->rotateX(true, theta/2);
+			vec3 deleteme = _arm.getEnd();
+			vec3 RE_tag = normalize(_arm.getEnd() - R);
+			vec2 norm_RE_tag_xy = normalize(vec2(RE_tag.x, RE_tag.y));
+			vec2 norm_RD_xy = normalize(vec2(RD.x, RD.y));
+			phi = degrees(acos(dot(norm_RE_tag_xy, norm_RD_xy)));
+			joints[curr_joint]->rotateZ(true, phi);
+			int x = 1;
+		}else {
+			vec2 RE_xz = normalize(vec2(RE.x, RE.z));
+			vec2 RD_xz = normalize(vec2(RD.x, RD.z));
+			theta = degrees(acos(dot(RE_xz, RD_xz)));
+			joints[curr_joint]->rotateX(true, theta/2);
+			vec3 RE_tag = normalize(joints[curr_joint]->getEnd() - R);
+			vec2 RD_xy = normalize(vec2(RD.x, RD.y));
+			vec2 RE_tag_xy = normalize(vec2(RE_tag.x, RE_tag.y));
+			phi = degrees(acos(dot(RD_xy, RE_tag_xy)));
+			joints[curr_joint]->rotateZ(true, phi);
+			//theta = degrees(acos(dot(RE_tag, RD)));
+			//joints[curr_joint]->rotateX(true, theta);
+			//vec3 RE_tag = normalize(_arm.getEnd() - R);
+			//phi = degrees(acos(dot(RE_tag, RD)));
+		}
 		/*vec3 euler_angles = rotationMatrixToEulerAngles(rotate(a , axis));
 		joints[curr_joint]->rotateTmp(eulerAngleYXZ);*/
 	}
 	else {
 		joints[curr_joint]->rotate(a/3, axis);
 	}
+	vec3 check = _arm.getEnd();
 	if (curr_joint == 0) {
 		curr_joint = 3;
 	}
@@ -106,26 +110,28 @@ Transformable* Scene::getPickedObject(int picked_id)
 	switch (picked_id)
 	{
 	case 0:
+		std::cout << "J0" << std::endl;
 		return &_arm._joint_0;
 		break;
 	case 1:
+		std::cout << "J1" << std::endl;
 		return &_arm._joint_1;
 		break;
 	case 2:
-		return &_arm._joint_2;
 		std::cout << "J2" << std::endl;
+		return &_arm._joint_2;
 		break;
 	case 3:
-		return &_arm._joint_3;
 		std::cout << "J3" << std::endl;
+		return &_arm._joint_3;
 		break;
-	case 4:
-		return &_box;
+	case 4:		
 		std::cout << "BOX" << std::endl;
+		return &_box;
 		break;
-	default:
+	default:		
+		std::cout << "SCENE" << std::endl;
 		return this;
-		std::cout << "BACKGROUND" << std::endl;
 		break;
 	}
 }

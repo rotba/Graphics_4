@@ -25,7 +25,7 @@ mat4 Joint::getM()
 
 vec3 Joint::getRoot()
 {
-	return (vec3)(getM() * vec4(0, 0, 1, 1));
+	return (vec3)(getM() * vec4(0, 0, 1.0, 1.0));
 }
 
 vec3 Joint::getEnd()

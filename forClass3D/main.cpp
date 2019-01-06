@@ -97,7 +97,7 @@ int main(int argc, char** argv)
 	glfwSetWindowUserPointer(display.m_window, (void *)&data);
 	glfwSetKeyCallback(display.m_window, key_callback);
 	glfwSetMouseButtonCallback(display.m_window, mouse_callback);
-	glfwSetCursorPosCallback(display.m_window, cursor_callback);
+	glfwSetCursorPosCallback(display.m_window, cursor_position_callback);
 	glfwSetScrollCallback(display.m_window, scroll_callback);
 	display.Clear(1.0f, 1.0f, 1.0f, 1.0f);
 	scene.render();
@@ -108,7 +108,7 @@ int main(int argc, char** argv)
 	/*while (!glfwWindowShouldClose(display.m_window) && i < 200)
 	{
 		display.Clear(1.0f, 1.0f, 1.0f, 1.0f);
-		scene._arm._joint_0.rotateX(true, 0.1);
+		scene._arm._joint_0.rotateX(true, 0.2);
 		scene.render();
 		display.SwapBuffers();
 		scene.updatePickingShader();
@@ -116,10 +116,10 @@ int main(int argc, char** argv)
 		i++;
 	}
 	i = 0;
-	while (!glfwWindowShouldClose(display.m_window) && i < 2000)
+	while (!glfwWindowShouldClose(display.m_window) && i < 20000000)
 	{
 		display.Clear(1.0f, 1.0f, 1.0f, 1.0f);
-		scene._arm._joint_0.rotateZ(true, 0.1);
+		scene._arm._joint_0.rotateZ(true, 0.5);
 		scene.render();
 		display.SwapBuffers();
 		scene.updatePickingShader();

@@ -114,7 +114,7 @@ using namespace std;
 		}
 		else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) ==GLFW_PRESS)
 		{
-			/*Data *data = (Data *)glfwGetWindowUserPointer(window);
+			Data *data = (Data *)glfwGetWindowUserPointer(window);
 			data->_scene->updatePickingShader();
 			unsigned char buff[4];
 			glReadPixels(xpos, DISPLAY_HEIGHT - ypos, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, buff);
@@ -122,6 +122,10 @@ using namespace std;
 				buff[0] +
 				buff[1] * 256 +
 				buff[2] * 256 * 256;
+			/*cout << "cursor_position_callback" << endl;
+			cout<< xpos<<endl;
+			cout << ypos << endl;
+			cout << pickedID << endl;
 			data->_picked = data->_scene->getPickedObject(pickedID);*/
 		}
 	}
@@ -131,8 +135,8 @@ using namespace std;
 		POINT p;
 		if (GetCursorPos(&p))
 		{
-			double xpos = p.x;
-			double ypos = p.y;
+			double xpos = p.x - 781;
+			double ypos = p.y - 230;
 			Data *data;
 			data = (Data *)glfwGetWindowUserPointer(window);
 			if (button == GLFW_MOUSE_BUTTON_LEFT) {
@@ -144,6 +148,10 @@ using namespace std;
 					buff[0] +
 					buff[1] * 256 +
 					buff[2] * 256 * 256;
+				cout << "mouse_callback" << endl;
+				cout << xpos << endl;
+				cout << ypos << endl;
+				cout << pickedID << endl;
 				data->_picked = data->_scene->getPickedObject(pickedID);
 			}
 			if (button == GLFW_MOUSE_BUTTON_RIGHT) {
