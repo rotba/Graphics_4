@@ -5,6 +5,7 @@
 #include "Box.h"
 #include "Camera.h"
 #include "texture.h"
+#include <math.h>
 
 static const int DISPLAY_WIDTH = 800;
 static const int DISPLAY_HEIGHT = 800;
@@ -31,7 +32,7 @@ void static generatePickingColors() {
 		*objects[i] = (vec4(r / 255.0f, g / 255.0f, b / 255.0f, 1.0f));
 	}
 }
-class Scene
+class Scene: public Transformable
 {
 public:
 	Scene(Mesh* cube_mesh, Mesh* rf_mesh, Shader* shader, Shader* picking_shader,Texture* cube_tex, Texture* box_tex);
@@ -40,6 +41,16 @@ public:
 	Camera* getCamera();
 	mat4 getT();
 	void printPickedObject(int picked_id);
+	Transformable* getPickedObject(int picked_id);
+	vec3 rotationMatrixToEulerAngles(mat4 M);
+	void rotateXPicked(int picked_id, bool anti_clockwise, float angle);
+	void rotateZPicked(int picked_id, bool anti_clockwise, float angle);
+	void translatePicked(int picked_id, vec3 trans);
+	void zoomPicked(int picked_id, bool in, float delta);
+	virtual void translate(vec3 trans);
+	virtual void rotateX(bool anti_clockwise, float angle);
+	virtual void rotateZ(bool anti_clockwise, float angle);
+	virtual void zoom(bool in, float delta);
 	bool isDone();
 	void setEuler();
 	Camera _camera;
@@ -49,7 +60,15 @@ public:
 	void updatePickingShader();
 	virtual ~Scene();
 private:
+	void updateChildren();
 	mat4 _T;
+	mat4 _Tchildren;
+	mat4 _Rphi;
+	mat4 _Rtheta;
+	mat4 _Rpsi;
+	mat4 _Rjunk;
+	mat4 _Thight;
+	mat4 _S;
 	Mesh* _rf_mesh;
 	Texture* _cube_tex;
 	Texture* _box_tex;

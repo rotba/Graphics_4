@@ -32,14 +32,37 @@ using namespace std;
 				data->_scene->setEuler();
 			}
 			break;
-		case GLFW_KEY_U:
-			if (action == GLFW_PRESS) {
-				//data->_rcube->rotateUWall();
-				data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-				data->_scene->render();
-				data->_display->SwapBuffers();
-				Sleep(10);
-			}
+		case GLFW_KEY_RIGHT:
+			data->_picked->rotateZ(true, 20);
+			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
+			data->_scene->render();
+			data->_display->SwapBuffers();
+			data->_scene->updatePickingShader();
+			Sleep(10);
+			break;
+		case GLFW_KEY_LEFT:
+			data->_picked->rotateZ(false, 20);
+			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
+			data->_scene->render();
+			data->_display->SwapBuffers();
+			data->_scene->updatePickingShader();
+			Sleep(10);
+			break;
+		case GLFW_KEY_UP:
+			data->_picked->rotateX(true, 20);
+			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
+			data->_scene->render();
+			data->_display->SwapBuffers();
+			data->_scene->updatePickingShader();
+			Sleep(10);
+			break;
+		case GLFW_KEY_DOWN:
+			data->_picked->rotateX(false, 20);
+			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
+			data->_scene->render();
+			data->_display->SwapBuffers();
+			data->_scene->updatePickingShader();
+			Sleep(10);
 			break;
 		case GLFW_KEY_D:
 			if (action == GLFW_PRESS) {
@@ -99,7 +122,7 @@ using namespace std;
 				buff[0] +
 				buff[1] * 256 +
 				buff[2] * 256 * 256;
-			data->_scene->printPickedObject(pickedID);
+			data->_picked = data->_scene->getPickedObject(pickedID);
 		}
 	}
 
@@ -153,7 +176,7 @@ using namespace std;
 		double factor = 0.2;
 		Data *data;
 		data = (Data *)glfwGetWindowUserPointer(window);
-		//data->_rcube->translateRCube(vec3(0, 0, yoffset*factor));
+		//data->_picked->translateRCube(vec3(0, 0, yoffset*factor));
 		data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
 		data->_scene->render();
 		data->_display->SwapBuffers();

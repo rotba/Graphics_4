@@ -10,6 +10,7 @@ public:
 	Scene* _scene;
 	Display* _display;
 	Shader* _picking_shader;
+	Transformable* _picked;
 	bool _l_button;
 	bool _r_button;
 	double _curr_x;

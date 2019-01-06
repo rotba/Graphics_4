@@ -1,11 +1,11 @@
 #include "Arm.h"
-Arm::Arm(mat4 P, mat4 T) :
+Arm::Arm(mat4 P, mat4 T, mat4* Tscene):
 	_T(T),
 	_P(P),
-	_joint_0(nullptr, translate(vec3(0, 0, 0)), P),
-	_joint_1(&_joint_0, translate(vec3(0, 0, 0)), P),
-	_joint_2(&_joint_1, translate(vec3(0, 0, 0)), P),
-	_joint_3(&_joint_2, translate(vec3(0, 0, 0)), P),
+	_joint_0(nullptr, translate(vec3(0, 0, 0)), P, Tscene),
+	_joint_1(&_joint_0, translate(vec3(0, 0, 0)), P, Tscene),
+	_joint_2(&_joint_1, translate(vec3(0, 0, 0)), P, Tscene),
+	_joint_3(&_joint_2, translate(vec3(0, 0, 0)), P, Tscene),
 	_joints{&_joint_0,&_joint_1,&_joint_2,&_joint_3}{}
 
 mat4 Arm::getT()

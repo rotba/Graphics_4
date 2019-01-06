@@ -1,10 +1,10 @@
 #include "Joint.h"
 
-Joint::Joint(Joint* prev, mat4 Tarm, mat4 P): _prev(prev), _Thight(translate(vec3(0,0,-4 ))), _Tarm(Tarm),_S(scale(vec3(1.0f, 1.0f, 2.0f))), _P(P){}
+Joint::Joint(Joint* prev, mat4 Tarm, mat4 P, mat4* Tscene): _prev(prev), _Thight(glm::translate(vec3(0,0,-4 ))), _Tarm(Tarm),_S(scale(vec3(1.0f, 1.0f, 2.0f))), _P(P), _Tscene(Tscene){}
 mat4 Joint::getMVP()
 {
-	mat4 base = translate(vec3(0,0,-1));
-	return _P*_Tarm*getPrev()*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S*base;
+	mat4 base = glm::translate(vec3(0,0,-1));
+	return _P*(*_Tscene)*_Tarm*getPrev()*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S*base;
 }
 
 mat4 Joint::getPrev()
@@ -19,8 +19,8 @@ mat4 Joint::getPrev()
 
 mat4 Joint::getM()
 {
-	mat4 base = translate(vec3(0, 0, -1));
-	return _Tarm*getPrev()*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S*base;
+	mat4 base = glm::translate(vec3(0, 0, -1));
+	return _Tarm*(*_Tscene)*getPrev()*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S*base;
 }
 
 vec3 Joint::getRoot()
@@ -48,6 +48,11 @@ void Joint::rotate(float a, vec3 axis)
 	_Rjunk = _Rjunk * glm::rotate(a, axis);
 }
 
+void Joint::rotateTmp(mat4 jnk)
+{
+	_Rjunk = _Rjunk * jnk;
+}
+
 
 
 void Joint::rotateX(bool anti_clockwise, float angle)
@@ -61,4 +66,12 @@ void Joint::rotateZ(bool anti_clockwise, float angle)
 	int anti_clockwise_factor = anti_clockwise ? 1 : -1;
 	_Rphi = glm::rotate(_Rphi, angle, vec3(0, 0, 1 * anti_clockwise_factor));
 	_Rpsi = glm::rotate(_Rpsi, angle, vec3(0, 0, -1 * anti_clockwise_factor));
+}
+
+void Joint::translate(vec3 trans)
+{
+}
+
+void Joint::zoom(bool in, float delta)
+{
 }

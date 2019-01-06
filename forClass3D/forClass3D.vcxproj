@@ -80,6 +80,7 @@
     <ClInclude Include="Location.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="texture.h" />
+    <ClInclude Include="Transforamble.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
