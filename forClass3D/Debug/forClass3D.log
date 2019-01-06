@@ -1,3 +1,6 @@
-﻿  Scene.cpp
+﻿  main.cpp
 c:\code\school\graphics\graphics_4\forclass3d\scene.h(16): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\code\school\graphics\graphics_4\forclass3d\inputmanager.h(120): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
+c:\code\school\graphics\graphics_4\forclass3d\inputmanager.h(143): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
+c:\code\school\graphics\graphics_4\forclass3d\inputmanager.h(195): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   forClass3D.vcxproj -> C:\Code\School\Graphics\Graphics_4\Debug\forClass3D.exe

@@ -8,7 +8,7 @@
 #include <math.h>
 
 static const int DISPLAY_WIDTH = 800;
-static const int DISPLAY_HEIGHT = 800;
+static const int DISPLAY_HEIGHT = 600;
 static const vec3 UP = vec3(0,0,-1);
 static const vec3 FORWARD = vec3(0, 1, 0);
 static const vec3 POSITION = vec3(0, -30, 0);

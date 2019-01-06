@@ -80,16 +80,10 @@ void Scene::solve()
 			vec2 RE_tag_xy = normalize(vec2(RE_tag.x, RE_tag.y));
 			phi = degrees(acos(dot(RD_xy, RE_tag_xy)));
 			joints[curr_joint]->rotateZ(true, phi);
-			//theta = degrees(acos(dot(RE_tag, RD)));
-			//joints[curr_joint]->rotateX(true, theta);
-			//vec3 RE_tag = normalize(_arm.getEnd() - R);
-			//phi = degrees(acos(dot(RE_tag, RD)));
 		}
-		/*vec3 euler_angles = rotationMatrixToEulerAngles(rotate(a , axis));
-		joints[curr_joint]->rotateTmp(eulerAngleYXZ);*/
 	}
 	else {
-		joints[curr_joint]->rotate(a/3, axis);
+		joints[curr_joint]->rotate(a/2, axis);
 	}
 	vec3 check = _arm.getEnd();
 	if (curr_joint == 0) {
