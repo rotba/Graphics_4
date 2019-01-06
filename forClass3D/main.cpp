@@ -96,12 +96,13 @@ int main(int argc, char** argv)
 	Data data(&scene, &display, &picking_shader);
 	glfwSetWindowUserPointer(display.m_window, (void *)&data);
 	glfwSetKeyCallback(display.m_window, key_callback);
-	//glfwSetMouseButtonCallback(display.m_window, mouse_callback);
-	glfwSetCursorPosCallback(display.m_window, cursor_position_callback);
+	glfwSetMouseButtonCallback(display.m_window, mouse_callback);
+	glfwSetCursorPosCallback(display.m_window, cursor_callback);
 	glfwSetScrollCallback(display.m_window, scroll_callback);
 	display.Clear(1.0f, 1.0f, 1.0f, 1.0f);
 	scene.render();
 	display.SwapBuffers();
+	scene.updatePickingShader();
 	glfwSetInputMode(display.m_window, GLFW_STICKY_KEYS, 0);
 	int i = 0;
 	/*while (!glfwWindowShouldClose(display.m_window) && i < 200)

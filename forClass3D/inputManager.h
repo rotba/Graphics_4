@@ -114,7 +114,7 @@ using namespace std;
 		}
 		else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) ==GLFW_PRESS)
 		{
-			Data *data = (Data *)glfwGetWindowUserPointer(window);
+			/*Data *data = (Data *)glfwGetWindowUserPointer(window);
 			data->_scene->updatePickingShader();
 			unsigned char buff[4];
 			glReadPixels(xpos, DISPLAY_HEIGHT - ypos, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, buff);
@@ -122,34 +122,43 @@ using namespace std;
 				buff[0] +
 				buff[1] * 256 +
 				buff[2] * 256 * 256;
-			data->_picked = data->_scene->getPickedObject(pickedID);
+			data->_picked = data->_scene->getPickedObject(pickedID);*/
 		}
 	}
 
 	static void mouse_callback(GLFWwindow* window, int button, int action, int mods)
 	{
-		double x;
-		double y;
-		Data *data;
-		data = (Data *)glfwGetWindowUserPointer(window);
-		if (button == GLFW_MOUSE_BUTTON_LEFT) {
-			if (GLFW_PRESS == action) 
-				data->_l_button = true;
-			else if (GLFW_RELEASE == action)
-				data->_l_button = true;
-				//data->_l_button = false;
+		POINT p;
+		if (GetCursorPos(&p))
+		{
+			double xpos = p.x;
+			double ypos = p.y;
+			Data *data;
+			data = (Data *)glfwGetWindowUserPointer(window);
+			if (button == GLFW_MOUSE_BUTTON_LEFT) {
+				Data *data = (Data *)glfwGetWindowUserPointer(window);
+				data->_scene->updatePickingShader();
+				unsigned char buff[4];
+				glReadPixels(xpos, DISPLAY_HEIGHT - ypos, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, buff);
+				int pickedID =
+					buff[0] +
+					buff[1] * 256 +
+					buff[2] * 256 * 256;
+				data->_picked = data->_scene->getPickedObject(pickedID);
+			}
+			if (button == GLFW_MOUSE_BUTTON_RIGHT) {
+				if (GLFW_PRESS == action)
+					data->_r_button = true;
+				else if (GLFW_RELEASE == action)
+					data->_r_button = false;
+			}
 		}
-		if (button == GLFW_MOUSE_BUTTON_RIGHT) {
-			if (GLFW_PRESS == action)
-				data->_r_button = true;
-			else if (GLFW_RELEASE == action)
-				data->_r_button = false;
-		}
+		
 		
 	}
 	static void cursor_callback(GLFWwindow* window, double xpos, double ypos)
 	{
-		double factor = 0.01;
+		double factor = 0.0025;
 		Data *data;
 		data = (Data *)glfwGetWindowUserPointer(window);
 		double move_x = data->_curr_x - xpos;
@@ -158,10 +167,11 @@ using namespace std;
 		data->_curr_y = ypos;
 		
 		if (data->_r_button) {
-			//data->_rcube->translateRCube(vec3(move_x*factor, move_y*factor, 0));
+			data->_picked->translate(vec3(move_x*factor, -move_y*factor, 0));
 			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
 			data->_scene->render();
 			data->_display->SwapBuffers();
+			data->_scene->updatePickingShader();
 		}
 		if (data->_l_button) {
 			//data->_rcube->rotateRCube(move_y*0.2, vec3(1, 0, 0));
@@ -169,6 +179,7 @@ using namespace std;
 			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
 			data->_scene->render();
 			data->_display->SwapBuffers();
+			data->_scene->updatePickingShader();
 		}
 	}
 	void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
@@ -176,10 +187,12 @@ using namespace std;
 		double factor = 0.2;
 		Data *data;
 		data = (Data *)glfwGetWindowUserPointer(window);
-		//data->_picked->translateRCube(vec3(0, 0, yoffset*factor));
+		bool in = yoffset > 0 ? true: false;
+		data->_picked->zoom(in, yoffset*factor);
 		data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
 		data->_scene->render();
 		data->_display->SwapBuffers();
+		data->_scene->updatePickingShader();
 	}
 
 

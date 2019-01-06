@@ -4,7 +4,7 @@ Box::Box(mat4 P,  mat4 T, mat4* Tscene): _P(P), _T(T), _Tscene(Tscene){}
 
 mat4 Box::getMVP()
 {
-	return _P *(*_Tscene)*_T*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S;
+	return glm::inverse((*_Tscene))*_P *_T*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S;
 }
 
 mat4 Box::getM()

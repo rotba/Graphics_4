@@ -132,6 +132,8 @@ Transformable* Scene::getPickedObject(int picked_id)
 
 void Scene::translate(vec3 trans)
 {
+	_T = _T * glm::translate(trans);
+	updateChildren();
 }
 
 void Scene::rotateX(bool anti_clockwise, float angle)
@@ -151,6 +153,9 @@ void Scene::rotateZ(bool anti_clockwise, float angle)
 
 void Scene::zoom(bool in, float delta)
 {
+	vec3 trans = FORWARD * delta;
+	_T = _T * glm::translate(trans);
+	updateChildren();
 }
 void Scene::updateChildren()
 {

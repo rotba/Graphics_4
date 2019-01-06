@@ -7,4 +7,5 @@ Data::Data(Scene* scene, Display* display, Shader* picking_shader)
 	_display = display;
 	_l_button = false;
 	_r_button = false;
+	_picked = scene;
 }
