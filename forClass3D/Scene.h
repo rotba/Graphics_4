@@ -42,7 +42,6 @@ public:
 	mat4 getT();
 	void printPickedObject(int picked_id);
 	Transformable* getPickedObject(int picked_id);
-	vec3 rotationMatrixToEulerAngles(mat4 M);
 	void rotateXPicked(int picked_id, bool anti_clockwise, float angle);
 	void rotateZPicked(int picked_id, bool anti_clockwise, float angle);
 	void translatePicked(int picked_id, vec3 trans);

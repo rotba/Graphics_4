@@ -97,7 +97,7 @@ int main(int argc, char** argv)
 	glfwSetWindowUserPointer(display.m_window, (void *)&data);
 	glfwSetKeyCallback(display.m_window, key_callback);
 	glfwSetMouseButtonCallback(display.m_window, mouse_callback);
-	glfwSetCursorPosCallback(display.m_window, cursor_position_callback);
+	glfwSetCursorPosCallback(display.m_window, cursor_callback);
 	glfwSetScrollCallback(display.m_window, scroll_callback);
 	display.Clear(1.0f, 1.0f, 1.0f, 1.0f);
 	scene.render();

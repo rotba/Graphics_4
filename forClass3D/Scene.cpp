@@ -3,8 +3,8 @@
 
 Scene::Scene(Mesh* cube_mesh, Mesh* rf_mesh, Shader* shader, Shader* picking_shader, Texture* cube_tex, Texture* box_tex):
 	_camera(UP, FORWARD,POSITION, CENTER, perspective(60.0f, (float)DISPLAY_WIDTH / (float)DISPLAY_HEIGHT, 0.1f, 100.0f)),
-	_arm(_camera.getLookAt(), mat4(1), &_Tchildren),
-	_box(_camera.getLookAt(), glm::translate(vec3(5.0f,0.0f,0.0f)), &_Tchildren),
+	_arm(_camera.getLookAt(), mat4(1), &_Tchildren, &_camera),
+	_box(_camera.getLookAt(), glm::translate(vec3(5.0f,0.0f,0.0f)), &_Tchildren, &_camera),
 	_cube_tex(cube_tex),
 	_box_tex(box_tex),
 	_cube_mesh(cube_mesh),
@@ -189,31 +189,7 @@ void Scene::updatePickingShader()
 	_picking_shader->flush();
 }
 
-vec3 Scene::rotationMatrixToEulerAngles(mat4 M)
-{
 
-	float sy = sqrt(M[0][0] * M[0][0] + M[1][0] * M[1][0]);
-
-	bool singular = sy < 1e-6; // If
-
-	float x, y, z;
-	if (!singular)
-	{
-		x = atan2(M[2][1], M[2][2]);
-		y = atan2(-M[2][0], sy);
-		z = atan2(M[1][0], M[0][0]);
-	}
-	else
-	{
-		x = atan2(-M[1][2], M[1][1]);
-		y = atan2(-M[2][0], sy);
-		z = 0;
-	}
-	return vec3(x, y, z);
-
-
-
-}
 
 void Scene::rotateXPicked(int picked_id, bool anti_clockwise, float angle)
 {

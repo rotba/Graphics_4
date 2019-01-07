@@ -8,3 +8,8 @@ mat4 Camera::getLookAt()
 {
 	return _perspective * lookAt(_pos - vec3(0, 0, 1), _center, _up);
 }
+
+vec3 Camera::getForward()
+{
+	return _forward;
+}

@@ -1,6 +1,10 @@
 #include "Box.h"
 
-Box::Box(mat4 P,  mat4 T, mat4* Tscene): _P(P), _T(T), _Tscene(Tscene){}
+Box::Box(mat4 P,  mat4 T, mat4* Tscene, Camera* camera): 
+	_P(P), 
+	_T(T), 
+	_Tscene(Tscene),
+	_camera(camera){}
 
 mat4 Box::getMVP()
 {
@@ -47,4 +51,6 @@ void Box::rotateZ(bool anti_clockwise, float angle)
 
 void Box::zoom(bool in, float delta)
 {
+	vec3 trans = (_camera->getForward()) * delta;
+	_T = _T * glm::translate(trans);
 }

@@ -3,11 +3,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 #include "Transforamble.h"
+#include "Camera.h"
 using namespace glm;
 class Joint: public Transformable
 {
 public:
-	Joint(Joint* prev , mat4 Tarm, mat4 P, mat4* Tscene);
+	Joint(Joint* prev , mat4 Tarm, mat4 P, mat4* Tscene, Camera* camera);
 	mat4 getMVP();
 	mat4 getPrev();
 	mat4 getM();
@@ -31,6 +32,7 @@ private:
 	mat4 _S;
 	mat4 _Tarm;
 	mat4 _P;
+	Camera* _camera;
 	vec4 _picking_color;
 	Joint* _prev;
 };

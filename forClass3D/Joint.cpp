@@ -1,6 +1,10 @@
 #include "Joint.h"
 
-Joint::Joint(Joint* prev, mat4 Tarm, mat4 P, mat4* Tscene): _prev(prev), _Thight(glm::translate(vec3(0,0,-4 ))), _Tarm(Tarm),_S(scale(vec3(1.0f, 1.0f, 2.0f))), _P(P), _Tscene(Tscene){}
+Joint::Joint(Joint* prev, mat4 Tarm, mat4 P, mat4* Tscene, Camera* camera): 
+	_prev(prev),
+	_Thight(glm::translate(vec3(0,0,-4 ))), _Tarm(Tarm),_S(scale(vec3(1.0f, 1.0f, 2.0f))), _P(P),
+	_Tscene(Tscene),
+	_camera(camera){}
 mat4 Joint::getMVP()
 {
 	mat4 base = glm::translate(vec3(0,0,-1));

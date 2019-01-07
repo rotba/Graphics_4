@@ -6,7 +6,7 @@
 class Arm
 {
 public:
-	Arm(mat4 P, mat4 T, mat4 *Tscene);
+	Arm(mat4 P, mat4 T, mat4 *Tscene, Camera* camera);
 	mat4 getT();
 	void render(Mesh* cube_mesh, Mesh* rf_mesh,Shader* shader);
 	void pickingRender(Mesh* cube_mesh, Mesh* rf_mesh, Shader* shader);
