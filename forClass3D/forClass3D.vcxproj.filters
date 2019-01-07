@@ -101,5 +101,8 @@
     <ClCompile Include="Arm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Transforamble.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

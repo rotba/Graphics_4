@@ -104,30 +104,20 @@ int main(int argc, char** argv)
 	display.SwapBuffers();
 	scene.updatePickingShader();
 	glfwSetInputMode(display.m_window, GLFW_STICKY_KEYS, 0);
-	int i = 0;
-	/*while (!glfwWindowShouldClose(display.m_window) && i < 200)
-	{
-		display.Clear(1.0f, 1.0f, 1.0f, 1.0f);
-		scene._arm._joint_0.rotateX(true, 0.2);
-		scene.render();
-		display.SwapBuffers();
-		scene.updatePickingShader();
-		glfwPollEvents();
-		i++;
-	}
-	i = 0;
-	while (!glfwWindowShouldClose(display.m_window) && i < 20000000)
-	{
-		display.Clear(1.0f, 1.0f, 1.0f, 1.0f);
-		scene._arm._joint_0.rotateZ(true, 0.5);
-		scene.render();
-		display.SwapBuffers();
-		scene.updatePickingShader();
-		glfwPollEvents();
-		i++;
-	}*/
+	int solver_softer = 1000;
 	while (!glfwWindowShouldClose(display.m_window))
 	{
+		if (data._solve) {
+			if (!scene.isDone() && solver_softer >=SOLVER_SOFTER) {
+				display.Clear(1.0f, 1.0f, 1.0f, 1.0f);
+				scene.solve();
+				scene.render();
+				display.SwapBuffers();
+				scene.updatePickingShader();
+				solver_softer = 0;
+			}
+			solver_softer++;
+		}
 		glfwPollEvents();
 	}
 	return 0;

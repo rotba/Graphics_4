@@ -13,6 +13,7 @@ public:
 	Transformable* _picked;
 	bool _l_button;
 	bool _r_button;
+	bool _solve = false;
 	double _curr_x;
 	double _curr_y;
 	double unit_factor = 0.025;

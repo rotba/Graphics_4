@@ -18,13 +18,7 @@ using namespace std;
 			break;
 		case GLFW_KEY_SPACE:
 			if (action == GLFW_PRESS) {
-				while (data->_scene->isDone()) {
-					data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-					data->_scene->solve();
-					data->_scene->render();
-					data->_display->SwapBuffers();
-					data->_scene->updatePickingShader();
-				}
+				data->_solve = !data->_solve;
 			}
 			break;
 		case GLFW_KEY_E:
@@ -72,12 +66,9 @@ using namespace std;
 				Sleep(10);
 			}
 			break;
-		case GLFW_KEY_D:
+		case GLFW_KEY_P:
 			if (action == GLFW_PRESS) {
-				//data->_rcube->rotateDWall();
-				data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-				data->_scene->render();
-				data->_display->SwapBuffers();
+				data->_picked->printEulerEngles();
 				Sleep(10);
 			}
 			break;
@@ -144,7 +135,7 @@ using namespace std;
 		glfwGetCursorPos(window, &xpos, &ypos);
 		Data *data;
 		data = (Data *)glfwGetWindowUserPointer(window);
-		if (button == GLFW_MOUSE_BUTTON_LEFT) {
+		if (button == GLFW_MOUSE_BUTTON_LEFT || button == GLFW_MOUSE_BUTTON_RIGHT) {
 			Data *data = (Data *)glfwGetWindowUserPointer(window);
 			data->_scene->updatePickingShader();
 			unsigned char buff[4];
@@ -153,10 +144,6 @@ using namespace std;
 				buff[0] +
 				buff[1] * 256 +
 				buff[2] * 256 * 256;
-			cout << "mouse_callback" << endl;
-			cout << xpos << endl;
-			cout << ypos << endl;
-			cout << pickedID << endl;
 			data->_picked = data->_scene->getPickedObject(pickedID);
 		}
 		if (button == GLFW_MOUSE_BUTTON_RIGHT) {
@@ -164,6 +151,12 @@ using namespace std;
 				data->_r_button = true;
 			else if (GLFW_RELEASE == action)
 				data->_r_button = false;
+		}
+		if (button == GLFW_MOUSE_BUTTON_LEFT) {
+			if (GLFW_PRESS == action)
+				data->_l_button = true;
+			else if (GLFW_RELEASE == action)
+				data->_l_button = false;
 		}
 		
 		
@@ -188,8 +181,9 @@ using namespace std;
 			data->_scene->updatePickingShader();
 		}
 		if (data->_l_button) {
-			//data->_rcube->rotateRCube(move_y*0.2, vec3(1, 0, 0));
-			//data->_rcube->rotateRCube(move_x*0.2, vec3(0, -1, 0));
+			//bool right = move_x > 0 ? true : false;
+			data->_picked->rotateX(true, move_y);
+			data->_picked->rotateZ(true , move_x);
 			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
 			data->_scene->render();
 			data->_display->SwapBuffers();

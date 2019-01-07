@@ -4,7 +4,7 @@
 using namespace std;
 Scene::Scene(Mesh* cube_mesh, Mesh* rf_mesh, Shader* shader, Shader* picking_shader, Texture* cube_tex, Texture* box_tex):
 	_camera(UP, FORWARD,POSITION, CENTER, perspective(60.0f, (float)DISPLAY_WIDTH / (float)DISPLAY_HEIGHT, 0.1f, 100.0f)),
-	_arm(_camera.getLookAt(), mat4(1), &_T, &_camera),
+	_arm(_camera.getLookAt(), mat4(1), &_T, &_R, &_camera),
 	_box(_camera.getLookAt(), glm::translate(vec3(5.0f,0.0f,0.0f)), &_T, &_R,&_camera),
 	_cube_tex(cube_tex),
 	_box_tex(box_tex),
@@ -63,9 +63,9 @@ void Scene::solve()
 		}
 		else if (RE.x == 0 && RE.y == 0) {
 			theta = a;
-			joints[curr_joint]->rotateX(true, theta/2);
-			vec3 deleteme = _arm.getEnd();
+			joints[curr_joint]->rotateX(D.x > 0 , theta / 2);
 			vec3 RE_tag = normalize(_arm.getEnd() - R);
+			//phi = calculatePhi(norm_RE_tag_xy, RD);
 			vec2 norm_RE_tag_xy = normalize(vec2(RE_tag.x, RE_tag.y));
 			vec2 norm_RD_xy = normalize(vec2(RD.x, RD.y));
 			phi = degrees(acos(dot(norm_RE_tag_xy, norm_RD_xy)));
@@ -74,11 +74,17 @@ void Scene::solve()
 		}else {
 			vec2 RE_xz = normalize(vec2(RE.x, RE.z));
 			vec2 RD_xz = normalize(vec2(RD.x, RD.z));
+			if (abs(dot(RE_xz, RD_xz)) > 1) cout << "hey" << endl;
 			theta = degrees(acos(dot(RE_xz, RD_xz)));
-			joints[curr_joint]->rotateX(true, theta/2);
+			vec3 proj_RE = vec3(RE.x, 0, RE.z);
+			vec3 proj_RD = vec3(RD.x, 0, RD.z);
+			vec3 right = cross(proj_RE, vec3(0,-1,0));
+			float dot1 = dot(right, proj_RD);
+			joints[curr_joint]->rotateX(dot1<0, theta/2);
 			vec3 RE_tag = normalize(joints[curr_joint]->getEnd() - R);
 			vec2 RD_xy = normalize(vec2(RD.x, RD.y));
 			vec2 RE_tag_xy = normalize(vec2(RE_tag.x, RE_tag.y));
+			if (abs(dot(RD_xy, RE_tag_xy))>1) cout<<"hey" <<endl;
 			phi = degrees(acos(dot(RD_xy, RE_tag_xy)));
 			joints[curr_joint]->rotateZ(true, phi);
 		}
@@ -93,6 +99,15 @@ void Scene::solve()
 	else {
 		curr_joint -=1;
 	}
+}
+float Scene::calculatePhi(vec3 RE, vec3 RD)
+{
+	return 0.0f;
+}
+
+float Scene::calculateTheta(vec3 RE, vec3 RD)
+{
+	return 0.0f;
 }
 
 mat4 Scene::getT()
@@ -166,7 +181,7 @@ void Scene::updateChildren()
 bool Scene::isDone()
 {
 	vec3 D = _box.getCenter();
-	return distance(_arm.getEnd(), D)>=EPSILON;
+	return distance(_arm.getEnd(), D)<=EPSILON;
 }
 
 void Scene::setEuler()

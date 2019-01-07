@@ -1,14 +1,15 @@
 #include "Joint.h"
 
-Joint::Joint(Joint* prev, mat4 Tarm, mat4 P, mat4* Tscene, Camera* camera): 
+Joint::Joint(Joint* prev, mat4* Tarm, mat4 P, mat4* Tscene, mat4* Rscene, Camera* camera):
 	_prev(prev),
 	_Thight(glm::translate(vec3(0,0,-4 ))), _Tarm(Tarm),_S(scale(vec3(1.0f, 1.0f, 2.0f))), _P(P),
 	_Tscene(Tscene),
+	_Rscene(Rscene),
 	_camera(camera){}
 mat4 Joint::getMVP()
 {
 	mat4 base = glm::translate(vec3(0,0,-1));
-	return _P*(*_Tscene)*_Tarm*getPrev()*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S*base;
+	return _P*(*_Tscene)*(*_Rscene)*(*_Tarm)*getPrev()*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S*base;
 }
 
 mat4 Joint::getPrev()
@@ -24,7 +25,7 @@ mat4 Joint::getPrev()
 mat4 Joint::getM()
 {
 	mat4 base = glm::translate(vec3(0, 0, -1));
-	return _Tarm*(*_Tscene)*getPrev()*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S*base;
+	return (*_Tscene)*(*_Tarm)*getPrev()*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S*base;
 }
 
 vec3 Joint::getRoot()
@@ -74,8 +75,11 @@ void Joint::rotateZ(bool anti_clockwise, float angle)
 
 void Joint::translate(vec3 trans)
 {
+	*_Tarm = (*_Tarm)* glm::translate(trans);
 }
 
 void Joint::zoom(bool in, float delta)
 {
+	vec3 trans = (_camera->getForward()) * delta;
+	*_Tarm = (*_Tarm)* glm::translate(trans);
 }

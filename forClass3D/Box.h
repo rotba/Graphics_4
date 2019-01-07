@@ -20,9 +20,6 @@ public:
 private:
 	mat4 _P;
 	mat4 _T;
-	mat4 _Rphi;
-	mat4 _Rtheta;
-	mat4 _Rpsi;
 	mat4 _Rjunk;
 	mat4 _Thight;
 	mat4 *_Tscene;

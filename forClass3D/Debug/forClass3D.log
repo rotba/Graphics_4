@@ -1,15 +1,3 @@
-﻿  Arm.cpp
-  Box.cpp
-  Data.cpp
-c:\code\school\graphics\graphics_4\forclass3d\scene.h(16): warning C4305: 'initializing': truncation from 'double' to 'float'
-  Joint.cpp
-  main.cpp
-c:\code\school\graphics\graphics_4\forclass3d\scene.h(16): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\code\school\graphics\graphics_4\forclass3d\inputmanager.h(128): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
-c:\code\school\graphics\graphics_4\forclass3d\inputmanager.h(151): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
-c:\code\school\graphics\graphics_4\forclass3d\inputmanager.h(176): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
-c:\code\school\graphics\graphics_4\forclass3d\inputmanager.h(205): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  Scene.cpp
-c:\code\school\graphics\graphics_4\forclass3d\scene.h(16): warning C4305: 'initializing': truncation from 'double' to 'float'
-  Generating Code...
+﻿  Scene.cpp
+c:\code\school\graphics\graphics_4\forclass3d\scene.h(17): warning C4305: 'initializing': truncation from 'double' to 'float'
   forClass3D.vcxproj -> C:\Code\School\Graphics\Graphics_4\Debug\forClass3D.exe

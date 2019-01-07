@@ -8,7 +8,7 @@ using namespace glm;
 class Joint: public Transformable
 {
 public:
-	Joint(Joint* prev , mat4 Tarm, mat4 P, mat4* Tscene, Camera* camera);
+	Joint(Joint* prev , mat4 *Tarm, mat4 P, mat4* Tscene,  mat4* Rscene, Camera* camera);
 	mat4 getMVP();
 	mat4 getPrev();
 	mat4 getM();
@@ -23,14 +23,12 @@ public:
 	virtual void translate(vec3 trans);
 	virtual void zoom(bool in, float delta) ;
 private:
-	mat4 _Rphi;
-	mat4 _Rtheta;
-	mat4 _Rpsi;
 	mat4 _Rjunk;
 	mat4 _Thight;
+	mat4* _Rscene;
 	mat4* _Tscene;
 	mat4 _S;
-	mat4 _Tarm;
+	mat4* _Tarm;
 	mat4 _P;
 	Camera* _camera;
 	vec4 _picking_color;
