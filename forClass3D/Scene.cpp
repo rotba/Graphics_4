@@ -159,7 +159,7 @@ void Scene::zoom(bool in, float delta)
 }
 void Scene::updateChildren()
 {
-	_R= _R*_Rpsi* _Rtheta*_Rphi*_Rjunk*_S;
+	_R= _Rpsi* _Rtheta*_Rphi*_Rjunk*_S;
 }
 
 bool Scene::isDone()

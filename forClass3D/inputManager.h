@@ -33,20 +33,24 @@ using namespace std;
 			}
 			break;
 		case GLFW_KEY_RIGHT:
-			data->_picked->rotateZ(true, 20);
-			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-			data->_scene->render();
-			data->_display->SwapBuffers();
-			data->_scene->updatePickingShader();
-			Sleep(10);
+			if (action == GLFW_PRESS) {
+				data->_picked->rotateZ(true, 20);
+				data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
+				data->_scene->render();
+				data->_display->SwapBuffers();
+				data->_scene->updatePickingShader();
+				Sleep(10);
+			}
 			break;
 		case GLFW_KEY_LEFT:
-			data->_picked->rotateZ(false, 20);
-			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-			data->_scene->render();
-			data->_display->SwapBuffers();
-			data->_scene->updatePickingShader();
-			Sleep(10);
+			if (action == GLFW_PRESS) {
+				data->_picked->rotateZ(false, 20);
+				data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
+				data->_scene->render();
+				data->_display->SwapBuffers();
+				data->_scene->updatePickingShader();
+				Sleep(10);
+			}
 			break;
 		case GLFW_KEY_UP:
 			if (action == GLFW_PRESS) {
@@ -56,15 +60,17 @@ using namespace std;
 				data->_display->SwapBuffers();
 				data->_scene->updatePickingShader();
 				Sleep(10);
-				break;
 			}
+			break;
 		case GLFW_KEY_DOWN:
-			data->_picked->rotateX(false, 20);
-			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-			data->_scene->render();
-			data->_display->SwapBuffers();
-			data->_scene->updatePickingShader();
-			Sleep(10);
+			if (action == GLFW_PRESS) {
+				data->_picked->rotateX(false, 20);
+				data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
+				data->_scene->render();
+				data->_display->SwapBuffers();
+				data->_scene->updatePickingShader();
+				Sleep(10);
+			}
 			break;
 		case GLFW_KEY_D:
 			if (action == GLFW_PRESS) {
