@@ -41,6 +41,10 @@ void Scene::render()
 
 void Scene::solve()
 {
+	if (cannotReach()) {
+		cout << "Cannot reach" << endl;
+		return;
+	}
 	Joint** joints = new Joint*[4];
 	joints[0] = &_arm._joint_0;
 	joints[1] = &_arm._joint_1;
@@ -65,27 +69,15 @@ void Scene::solve()
 			theta = a;
 			joints[curr_joint]->rotateX(D.x > 0 , theta / 2);
 			vec3 RE_tag = normalize(_arm.getEnd() - R);
-			//phi = calculatePhi(norm_RE_tag_xy, RD);
-			vec2 norm_RE_tag_xy = normalize(vec2(RE_tag.x, RE_tag.y));
-			vec2 norm_RD_xy = normalize(vec2(RD.x, RD.y));
-			phi = degrees(acos(dot(norm_RE_tag_xy, norm_RD_xy)));
+			phi = calculatePhi(RE_tag, RD);
 			joints[curr_joint]->rotateZ(true, phi);
 			int x = 1;
 		}else {
-			vec2 RE_xz = normalize(vec2(RE.x, RE.z));
-			vec2 RD_xz = normalize(vec2(RD.x, RD.z));
-			if (abs(dot(RE_xz, RD_xz)) > 1) cout << "hey" << endl;
-			theta = degrees(acos(dot(RE_xz, RD_xz)));
-			vec3 proj_RE = vec3(RE.x, 0, RE.z);
-			vec3 proj_RD = vec3(RD.x, 0, RD.z);
-			vec3 right = cross(proj_RE, vec3(0,-1,0));
-			float dot1 = dot(right, proj_RD);
-			joints[curr_joint]->rotateX(dot1<0, theta/2);
+			theta = calculateTheta(RE,RD);
+			bool antiClockwise = antiClockwiseTheta(RE, RD);
+			joints[curr_joint]->rotateX(antiClockwise, theta/2);
 			vec3 RE_tag = normalize(joints[curr_joint]->getEnd() - R);
-			vec2 RD_xy = normalize(vec2(RD.x, RD.y));
-			vec2 RE_tag_xy = normalize(vec2(RE_tag.x, RE_tag.y));
-			if (abs(dot(RD_xy, RE_tag_xy))>1) cout<<"hey" <<endl;
-			phi = degrees(acos(dot(RD_xy, RE_tag_xy)));
+			phi = calculatePhi(RE_tag, RD);
 			joints[curr_joint]->rotateZ(true, phi);
 		}
 	}
@@ -102,12 +94,35 @@ void Scene::solve()
 }
 float Scene::calculatePhi(vec3 RE, vec3 RD)
 {
-	return 0.0f;
+	vec2 RE_xy = normalize(vec2(RE.x, RE.y));
+	vec2 RD_xy = normalize(vec2(RD.x, RD.y));
+	float  cos_phi = dot(RE_xy, RD_xy);
+	if (abs(cos_phi) > 1) {
+		return 0;
+	}
+	float phi_in_radians = acos(cos_phi);
+	return degrees(phi_in_radians);
 }
 
 float Scene::calculateTheta(vec3 RE, vec3 RD)
 {
-	return 0.0f;
+	vec2 RE_xz = normalize(vec2(RE.x, RE.z));
+	vec2 RD_xz = normalize(vec2(RD.x, RD.z));
+	float cos_theta = dot(RE_xz, RD_xz);
+	if (abs(cos_theta) > 1) {
+		return 0;
+	}
+	float theta_in_radians = acos(cos_theta);
+	return degrees(theta_in_radians);
+}
+
+bool Scene::antiClockwiseTheta(vec3 RE, vec3 RD)
+{
+	vec3 proj_RE = vec3(RE.x, 0, RE.z);
+	vec3 proj_RD = vec3(RD.x, 0, RD.z);
+	vec3 right = cross(proj_RE, vec3(0, -1, 0));
+	float dot_product = dot(right, proj_RD);
+	return dot_product < 0;
 }
 
 mat4 Scene::getT()
@@ -144,6 +159,11 @@ Transformable* Scene::getPickedObject(int picked_id)
 		return this;
 		break;
 	}
+}
+
+bool Scene::cannotReach()
+{
+	return distance(_arm.getRoot(), _box.getCenter()) >16;
 }
 
 void Scene::translate(vec3 trans)
@@ -213,33 +233,3 @@ void Scene::updatePickingShader()
 
 
 
-void Scene::rotateXPicked(int picked_id, bool anti_clockwise, float angle)
-{
-	switch (picked_id)
-	{
-	case 0:
-		std::cout << "J0" << std::endl;
-		_arm._joint_0.rotateX(anti_clockwise, angle);
-		break;
-	case 1:
-		std::cout << "J1" << std::endl;
-		_arm._joint_1.rotateX(anti_clockwise, angle);
-		break;
-	case 2:
-		_arm._joint_2.rotateX(anti_clockwise, angle);
-		std::cout << "J2" << std::endl;
-		break;
-	case 3:
-		_arm._joint_3.rotateX(anti_clockwise, angle);
-		std::cout << "J3" << std::endl;
-		break;
-	case 4:
-		_box.rotateX(anti_clockwise, angle);
-		std::cout << "BOX" << std::endl;
-		break;
-	default:
-		this->rotateX(anti_clockwise ,angle);
-		std::cout << "BACKGROUND" << std::endl;
-		break;
-	}
-}

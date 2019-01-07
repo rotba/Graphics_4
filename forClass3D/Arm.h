@@ -11,6 +11,7 @@ public:
 	void render(Mesh* cube_mesh, Mesh* rf_mesh,Shader* shader);
 	void pickingRender(Mesh* cube_mesh, Mesh* rf_mesh, Shader* shader);
 	vec3 getEnd();
+	vec3 getRoot();
 	Joint _joint_0;
 	Joint _joint_1;
 	Joint _joint_2;

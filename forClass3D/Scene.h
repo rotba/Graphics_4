@@ -41,12 +41,8 @@ public:
 	void solve();
 	Camera* getCamera();
 	mat4 getT();
-	void printPickedObject(int picked_id);
 	Transformable* getPickedObject(int picked_id);
-	void rotateXPicked(int picked_id, bool anti_clockwise, float angle);
-	void rotateZPicked(int picked_id, bool anti_clockwise, float angle);
-	void translatePicked(int picked_id, vec3 trans);
-	void zoomPicked(int picked_id, bool in, float delta);
+	bool cannotReach();
 	virtual void translate(vec3 trans);
 	virtual void rotateX(bool anti_clockwise, float angle);
 	virtual void rotateZ(bool anti_clockwise, float angle);
@@ -61,6 +57,9 @@ public:
 	virtual ~Scene();
 private:
 	void updateChildren();
+	float calculatePhi(vec3 RE, vec3 RD);
+	float calculateTheta(vec3 RE, vec3 RD);
+	bool antiClockwiseTheta(vec3 RE, vec3 RD);
 	mat4 _T;
 	mat4 _R;
 	mat4 _Rjunk;

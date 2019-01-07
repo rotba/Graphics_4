@@ -18,7 +18,12 @@ using namespace std;
 			break;
 		case GLFW_KEY_SPACE:
 			if (action == GLFW_PRESS) {
-				data->_solve = !data->_solve;
+				if (data->_scene->cannotReach()) {
+					cout<<"Cannot reach"<<endl;
+				}
+				else {
+					data->_solve = !data->_solve;
+				}
 			}
 			break;
 		case GLFW_KEY_E:
@@ -104,30 +109,7 @@ using namespace std;
 			break;
 		}
 	}
-	void cursor_position_callback(GLFWwindow* window, double xpos,double ypos)
-	{
-		if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) ==GLFW_PRESS)
-		{
-			//updatePosition(xpos, ypos);
-			//mouseProccessing(GLFW_MOUSE_BUTTON_RIGHT);
-		}
-		else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) ==GLFW_PRESS )
-		{
-			Data *data = (Data *)glfwGetWindowUserPointer(window);
-			data->_scene->updatePickingShader();
-			unsigned char buff[4];
-			glReadPixels(xpos, DISPLAY_HEIGHT - ypos, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, buff);
-			int pickedID =
-				buff[0] +
-				buff[1] * 256 +
-				buff[2] * 256 * 256;
-			/*cout << "cursor_position_callback" << endl;
-			cout<< xpos<<endl;
-			cout << ypos << endl;
-			cout << pickedID << endl;*/
-			//data->_picked = data->_scene->getPickedObject(pickedID);
-		}
-	}
+	
 
 	static void mouse_callback(GLFWwindow* window, int button, int action, int mods)
 	{
@@ -167,7 +149,7 @@ using namespace std;
 		data = (Data *)glfwGetWindowUserPointer(window);
 		GLfloat winZ;
 		glReadPixels(xpos, DISPLAY_HEIGHT - ypos, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
-		double factor = (data->unit_factor*winZ)/data->unit_depth;
+		double factor = 0.05;
 		double move_x = data->_curr_x - xpos;
 		double move_y = data->_curr_y - ypos;
 		data->_curr_x = xpos;
@@ -181,7 +163,6 @@ using namespace std;
 			data->_scene->updatePickingShader();
 		}
 		if (data->_l_button) {
-			//bool right = move_x > 0 ? true : false;
 			data->_picked->rotateX(true, move_y);
 			data->_picked->rotateZ(true , move_x);
 			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);

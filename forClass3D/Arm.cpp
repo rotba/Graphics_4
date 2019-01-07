@@ -40,3 +40,8 @@ vec3 Arm::getEnd()
 {
 	return (_joint_3.getEnd());
 }
+
+vec3 Arm::getRoot()
+{
+	return _joint_0.getRoot();
+}
