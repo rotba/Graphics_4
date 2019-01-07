@@ -9,6 +9,16 @@ mat4 Camera::getLookAt()
 	return _perspective * lookAt(_pos , _center, _up);
 }
 
+mat4 Camera::getLookAt2()
+{
+	return lookAt(_pos, _center, _up);
+}
+
+mat4 Camera::getPerspective()
+{
+	return _perspective;
+}
+
 vec3 Camera::getForward()
 {
 	return _forward;

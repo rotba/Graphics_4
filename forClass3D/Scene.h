@@ -12,7 +12,7 @@ static const int DISPLAY_HEIGHT = 600;
 static const int SOLVER_SOFTER = 5000;
 static const vec3 UP = vec3(0,0,-1);
 static const vec3 FORWARD = vec3(0, 1, 0);
-static const vec3 POSITION = vec3(0, -30, 0);
+static const vec3 POSITION = vec3(0, -15, 0);
 static const vec3 CENTER = vec3(0, 0, -5);
 static const float EPSILON = 0.3;
 static float EULER = false;
@@ -47,6 +47,7 @@ public:
 	virtual void rotateX(bool anti_clockwise, float angle);
 	virtual void rotateZ(bool anti_clockwise, float angle);
 	virtual void zoom(bool in, float delta);
+	virtual mat4 getM();
 	bool isDone();
 	void setEuler();
 	Camera _camera;

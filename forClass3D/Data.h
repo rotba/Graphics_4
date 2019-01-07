@@ -14,8 +14,8 @@ public:
 	bool _l_button;
 	bool _r_button;
 	bool _solve = false;
-	double _curr_x;
-	double _curr_y;
+	vec3 curr_cursor = vec3(0, 0, 0);
+	float curr_depth = 0;
 	double unit_factor = 0.025;
 	double unit_depth = 0.993721;
 private:

@@ -147,24 +147,41 @@ using namespace std;
 	{
 		Data *data;
 		data = (Data *)glfwGetWindowUserPointer(window);
+		GLint viewport[4];
 		GLfloat winZ;
-		glReadPixels(xpos, DISPLAY_HEIGHT - ypos, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+		glGetIntegerv(GL_VIEWPORT, viewport);
+		if (data->_r_button || data->_l_button) {
+			winZ = data->curr_depth;
+		}
+		else {
+			glReadPixels(xpos, DISPLAY_HEIGHT - ypos, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+			data->curr_depth = winZ;
+		}
+		glm::vec3 screen = glm::vec3(xpos, viewport[3] - ypos, winZ);
+		glm::mat4 view = data->_scene->getCamera()->getLookAt2();
+		glm::mat4 projection = data->_scene->getCamera()->getPerspective();
+		vec3 projected = glm::unProject(screen, view, projection, glm::vec4(0, 0, viewport[2], viewport[3]));
 		double factor = 0.05;
-		double move_x = data->_curr_x - xpos;
-		double move_y = data->_curr_y - ypos;
-		data->_curr_x = xpos;
-		data->_curr_y = ypos;
+		vec3 cursing_delta(projected - data->curr_cursor);
+		data->curr_cursor = projected;
+		cursing_delta.y = 0;
+		cout << cursing_delta.x << " " << cursing_delta.y << " " << cursing_delta.z << endl;
 		
 		if (data->_r_button) {
-			data->_picked->translate(vec3(move_x*factor, 0, -move_y*factor));
+			if (data->_picked == data->_scene) {
+				data->_picked->translate(0.1f*cursing_delta);
+			}
+			else {
+				data->_picked->translate(cursing_delta);
+			}
 			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
 			data->_scene->render();
 			data->_display->SwapBuffers();
 			data->_scene->updatePickingShader();
 		}
 		if (data->_l_button) {
-			data->_picked->rotateX(true, move_y);
-			data->_picked->rotateZ(true , move_x);
+			data->_picked->rotateX(true, cursing_delta.z);
+			data->_picked->rotateZ(true , cursing_delta.x);
 			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
 			data->_scene->render();
 			data->_display->SwapBuffers();

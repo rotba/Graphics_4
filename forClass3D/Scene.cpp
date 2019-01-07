@@ -193,6 +193,10 @@ void Scene::zoom(bool in, float delta)
 	_T = _T * glm::translate(trans);
 	updateChildren();
 }
+mat4 Scene::getM()
+{
+	return mat4();
+}
 void Scene::updateChildren()
 {
 	_R= _Rpsi* _Rtheta*_Rphi*_Rjunk*_S;

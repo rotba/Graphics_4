@@ -8,7 +8,9 @@ class Camera
 public:
 	Camera(vec3 up, vec3 forward,vec3 pos, vec3 center,mat4 perspective);
 	mat4 getLookAt();
+	mat4 getLookAt2();
 	vec3 getForward();
+	mat4 getPerspective();
 private:
 	vec3 _up;
 	vec3 _forward;

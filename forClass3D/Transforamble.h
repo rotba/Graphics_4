@@ -9,6 +9,7 @@ public:
 	virtual void rotateX(bool anti_clockwise, float angle) = 0;
 	virtual void rotateZ(bool anti_clockwise, float angle) = 0;
 	virtual void zoom(bool in, float delta) = 0;
+	virtual mat4 getM() = 0;
 	void printEulerEngles();
 
 protected:
