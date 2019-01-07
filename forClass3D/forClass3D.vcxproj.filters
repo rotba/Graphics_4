@@ -57,7 +57,10 @@
     <ClInclude Include="Transforamble.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ScenePackage.h">
+    <ClInclude Include="H1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="H2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

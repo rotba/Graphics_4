@@ -49,13 +49,15 @@ using namespace std;
 			Sleep(10);
 			break;
 		case GLFW_KEY_UP:
-			data->_picked->rotateX(true, 20);
-			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
-			data->_scene->render();
-			data->_display->SwapBuffers();
-			data->_scene->updatePickingShader();
-			Sleep(10);
-			break;
+			if (action == GLFW_PRESS) {
+				data->_picked->rotateX(true, 20);
+				data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
+				data->_scene->render();
+				data->_display->SwapBuffers();
+				data->_scene->updatePickingShader();
+				Sleep(10);
+				break;
+			}
 		case GLFW_KEY_DOWN:
 			data->_picked->rotateX(false, 20);
 			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);

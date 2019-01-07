@@ -61,7 +61,7 @@ public:
 private:
 	void updateChildren();
 	mat4 _T;
-	mat4 _Tchildren;
+	mat4 _R;
 	mat4 _Rphi;
 	mat4 _Rtheta;
 	mat4 _Rpsi;

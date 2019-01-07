@@ -3,8 +3,8 @@
 
 Scene::Scene(Mesh* cube_mesh, Mesh* rf_mesh, Shader* shader, Shader* picking_shader, Texture* cube_tex, Texture* box_tex):
 	_camera(UP, FORWARD,POSITION, CENTER, perspective(60.0f, (float)DISPLAY_WIDTH / (float)DISPLAY_HEIGHT, 0.1f, 100.0f)),
-	_arm(_camera.getLookAt(), mat4(1), &_Tchildren, &_camera),
-	_box(_camera.getLookAt(), glm::translate(vec3(5.0f,0.0f,0.0f)), &_Tchildren, &_camera),
+	_arm(_camera.getLookAt(), mat4(1), &_T, &_camera),
+	_box(_camera.getLookAt(), glm::translate(vec3(5.0f,0.0f,0.0f)), &_T, &_R,&_camera),
 	_cube_tex(cube_tex),
 	_box_tex(box_tex),
 	_cube_mesh(cube_mesh),
@@ -159,7 +159,7 @@ void Scene::zoom(bool in, float delta)
 }
 void Scene::updateChildren()
 {
-	_Tchildren = _T * _Rpsi* _Rtheta*_Rphi*_Rjunk*_S;
+	_R= _R*_Rpsi* _Rtheta*_Rphi*_Rjunk*_S;
 }
 
 bool Scene::isDone()

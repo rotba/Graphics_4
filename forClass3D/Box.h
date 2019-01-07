@@ -6,7 +6,7 @@ using namespace glm;
 class Box: public Transformable
 {
 public:
-	Box(mat4 P, mat4 T, mat4* Tscene, Camera* camera);
+	Box(mat4 P, mat4 T, mat4* Tscene, mat4* Rscene, Camera* camera);
 	mat4 getMVP();
 	mat4 getM();
 	vec3 getCenter();
@@ -26,6 +26,7 @@ private:
 	mat4 _Rjunk;
 	mat4 _Thight;
 	mat4 *_Tscene;
+	mat4 *_Rscene;
 	mat4 _S;
 	Camera* _camera;
 	vec4 _picking_color;

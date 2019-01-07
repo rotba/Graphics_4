@@ -1,19 +1,20 @@
 #include "Box.h"
 
-Box::Box(mat4 P,  mat4 T, mat4* Tscene, Camera* camera): 
+Box::Box(mat4 P,  mat4 T, mat4* Tscene, mat4* Rscene, Camera* camera):
 	_P(P), 
 	_T(T), 
 	_Tscene(Tscene),
+	_Rscene(Rscene),
 	_camera(camera){}
 
 mat4 Box::getMVP()
 {
-	return glm::inverse((*_Tscene))*_P *_T*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S;
+	return glm::inverse((*_Tscene))*_P*(*_Rscene)*_T*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S;
 }
 
 mat4 Box::getM()
 {
-	return _S*(*_Tscene)*_T*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S;
+	return _S*(*_Tscene)*(*_Rscene)*_T*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S;
 }
 
 vec3 Box::getCenter()
