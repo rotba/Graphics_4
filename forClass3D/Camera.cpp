@@ -6,7 +6,7 @@ Camera::Camera(vec3 up ,vec3 forward ,vec3 pos, vec3 center,mat4 perspective):_u
 
 mat4 Camera::getLookAt()
 {
-	return _perspective * lookAt(_pos - vec3(0, 0, 1), _center, _up);
+	return _perspective * lookAt(_pos , _center, _up);
 }
 
 vec3 Camera::getForward()

@@ -170,16 +170,18 @@ using namespace std;
 	}
 	static void cursor_callback(GLFWwindow* window, double xpos, double ypos)
 	{
-		double factor = 0.0025;
 		Data *data;
 		data = (Data *)glfwGetWindowUserPointer(window);
+		GLfloat winZ;
+		glReadPixels(xpos, DISPLAY_HEIGHT - ypos, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+		double factor = (data->unit_factor*winZ)/data->unit_depth;
 		double move_x = data->_curr_x - xpos;
 		double move_y = data->_curr_y - ypos;
 		data->_curr_x = xpos;
 		data->_curr_y = ypos;
 		
 		if (data->_r_button) {
-			data->_picked->translate(vec3(move_x*factor, -move_y*factor, 0));
+			data->_picked->translate(vec3(move_x*factor, 0, -move_y*factor));
 			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
 			data->_scene->render();
 			data->_display->SwapBuffers();

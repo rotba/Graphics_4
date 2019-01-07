@@ -15,6 +15,8 @@ public:
 	bool _r_button;
 	double _curr_x;
 	double _curr_y;
+	double unit_factor = 0.025;
+	double unit_depth = 0.993721;
 private:
 	
 };

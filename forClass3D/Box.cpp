@@ -9,7 +9,7 @@ Box::Box(mat4 P,  mat4 T, mat4* Tscene, mat4* Rscene, Camera* camera):
 
 mat4 Box::getMVP()
 {
-	return glm::inverse((*_Tscene))*_P*(*_Rscene)*_T*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S;
+	return _P*(*_Tscene)*(*_Rscene)*_T*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S;
 }
 
 mat4 Box::getM()

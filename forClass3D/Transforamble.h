@@ -9,6 +9,12 @@ public:
 	virtual void rotateX(bool anti_clockwise, float angle) = 0;
 	virtual void rotateZ(bool anti_clockwise, float angle) = 0;
 	virtual void zoom(bool in, float delta) = 0;
+	//virtual void printEulerEngles() = 0;
 
+protected:
+	mat4 _Rphi;
+	mat4 _Rtheta;
+	mat4 _Rpsi;
 private:
+	
 };

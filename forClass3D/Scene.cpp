@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include <iostream>
 
+using namespace std;
 Scene::Scene(Mesh* cube_mesh, Mesh* rf_mesh, Shader* shader, Shader* picking_shader, Texture* cube_tex, Texture* box_tex):
 	_camera(UP, FORWARD,POSITION, CENTER, perspective(60.0f, (float)DISPLAY_WIDTH / (float)DISPLAY_HEIGHT, 0.1f, 100.0f)),
 	_arm(_camera.getLookAt(), mat4(1), &_T, &_camera),
@@ -170,6 +171,12 @@ bool Scene::isDone()
 
 void Scene::setEuler()
 {
+	if (EULER) {
+		cout << "Vector rotation IK solver" << endl;
+	}
+	else {
+		cout << "Euler angles IK solver" << endl;
+	}
 	EULER = !EULER;
 }
 
