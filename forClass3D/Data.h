@@ -16,6 +16,8 @@ public:
 	bool _solve = false;
 	vec3 curr_cursor = vec3(0, 0, 0);
 	float curr_depth = 0;
+	double _curr_x;
+	double _curr_y;
 	double unit_factor = 0.025;
 	double unit_depth = 0.993721;
 private:

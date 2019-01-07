@@ -60,7 +60,7 @@ private:
 	void updateChildren();
 	float calculatePhi(vec3 RE, vec3 RD);
 	float calculateTheta(vec3 RE, vec3 RD);
-	bool antiClockwiseTheta(vec3 RE, vec3 RD);
+	bool antiClockwiseTheta(vec3 RE, vec3 RD, Joint* curr_joint);
 	mat4 _T;
 	mat4 _R;
 	mat4 _Rjunk;

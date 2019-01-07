@@ -164,8 +164,11 @@ using namespace std;
 		double factor = 0.05;
 		vec3 cursing_delta(projected - data->curr_cursor);
 		data->curr_cursor = projected;
+		double move_x = data->_curr_x - xpos;
+		double move_y = data->_curr_y - ypos;
+		data->_curr_x = xpos;
+		data->_curr_y = ypos;
 		cursing_delta.y = 0;
-		cout << cursing_delta.x << " " << cursing_delta.y << " " << cursing_delta.z << endl;
 		
 		if (data->_r_button) {
 			if (data->_picked == data->_scene) {
@@ -180,8 +183,8 @@ using namespace std;
 			data->_scene->updatePickingShader();
 		}
 		if (data->_l_button) {
-			data->_picked->rotateX(true, cursing_delta.z);
-			data->_picked->rotateZ(true , cursing_delta.x);
+			data->_picked->rotateX(true, move_x*0.7);
+			data->_picked->rotateZ(true , -move_y * 0.7);
 			data->_display->Clear(1.0f, 1.0f, 1.0f, 1.0f);
 			data->_scene->render();
 			data->_display->SwapBuffers();

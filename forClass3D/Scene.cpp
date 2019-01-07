@@ -74,7 +74,7 @@ void Scene::solve()
 			int x = 1;
 		}else {
 			theta = calculateTheta(RE,RD);
-			bool antiClockwise = antiClockwiseTheta(RE, RD);
+			bool antiClockwise = antiClockwiseTheta(RE, RD, joints[curr_joint]);
 			joints[curr_joint]->rotateX(antiClockwise, theta/2);
 			vec3 RE_tag = normalize(joints[curr_joint]->getEnd() - R);
 			phi = calculatePhi(RE_tag, RD);
@@ -116,11 +116,13 @@ float Scene::calculateTheta(vec3 RE, vec3 RD)
 	return degrees(theta_in_radians);
 }
 
-bool Scene::antiClockwiseTheta(vec3 RE, vec3 RD)
+bool Scene::antiClockwiseTheta(vec3 RE, vec3 RD, Joint* curr_joint)
 {
 	vec3 proj_RE = vec3(RE.x, 0, RE.z);
 	vec3 proj_RD = vec3(RD.x, 0, RD.z);
-	vec3 right = cross(proj_RE, vec3(0, -1, 0));
+	//vec3 up = (vec3)(curr_joint->getR()*vec4(0, -1, 0, 1));
+	vec3 up = (vec3)vec4(0, -1, 0, 1);
+	vec3 right = cross(proj_RE, up);
 	float dot_product = dot(right, proj_RD);
 	return dot_product < 0;
 }

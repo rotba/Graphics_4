@@ -28,6 +28,11 @@ mat4 Joint::getM()
 	return (*_Tscene)*(*_Tarm)*getPrev()*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S*base;
 }
 
+mat4 Joint::getR()
+{
+	return _Rpsi * _Rtheta*_Rphi*_Rjunk;
+}
+
 vec3 Joint::getRoot()
 {
 	return (vec3)(getM() * vec4(0, 0, 1.0, 1.0));

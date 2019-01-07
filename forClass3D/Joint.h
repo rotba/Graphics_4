@@ -12,6 +12,7 @@ public:
 	mat4 getMVP();
 	mat4 getPrev();
 	mat4 getM();
+	mat4 getR();
 	vec3 getRoot();
 	vec3 getEnd();
 	void setPickingColor(vec4 pickingColor);
