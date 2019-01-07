@@ -67,7 +67,7 @@ void Scene::solve()
 		}
 		else if (RE.x == 0 && RE.y == 0) {
 			theta = a;
-			joints[curr_joint]->rotateX(D.x > 0 , theta / 2);
+			joints[curr_joint]->rotateX(D.x > 0 , theta/2 );
 			vec3 RE_tag = normalize(_arm.getEnd() - R);
 			phi = calculatePhi(RE_tag, RD);
 			joints[curr_joint]->rotateZ(true, phi);

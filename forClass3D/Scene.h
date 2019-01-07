@@ -55,6 +55,7 @@ public:
 	Box _box;
 	Mesh* _cube_mesh;
 	void updatePickingShader();
+	int curr_joint = 3;
 	virtual ~Scene();
 private:
 	void updateChildren();
@@ -71,5 +72,4 @@ private:
 	Texture* _box_tex;
 	Shader* _shader;
 	Shader* _picking_shader;
-	int curr_joint = 3;
 };

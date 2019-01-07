@@ -17,6 +17,7 @@ using namespace std;
 				glfwSetWindowShouldClose(window,GLFW_TRUE);
 			break;
 		case GLFW_KEY_SPACE:
+			data->_scene->curr_joint = 3;
 			if (action == GLFW_PRESS) {
 				if (data->_scene->cannotReach()) {
 					cout<<"Cannot reach"<<endl;
