@@ -1,0 +1,24 @@
+﻿  Arm.cpp
+c:\code\school\graphics\graphics_4\forclass3d\arm.h(2): fatal error C1083: Cannot open include file: 'mesh.h': No such file or directory
+  Box.cpp
+c:\code\school\graphics\graphics_4\forclass3d\box.h(2): fatal error C1083: Cannot open include file: 'glm\glm.hpp': No such file or directory
+  Camera.cpp
+c:\code\school\graphics\graphics_4\forclass3d\camera.h(2): fatal error C1083: Cannot open include file: 'glm\glm.hpp': No such file or directory
+  Cube.cpp
+c:\code\school\graphics\graphics_4\forclass3d\cube.h(1): fatal error C1083: Cannot open include file: 'glm\glm.hpp': No such file or directory
+  Data.cpp
+c:\code\school\graphics\graphics_4\forclass3d\display.h(5): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+  display.cpp
+c:\code\school\graphics\graphics_4\forclass3d\display.h(5): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+  Joint.cpp
+c:\code\school\graphics\graphics_4\forclass3d\joint.h(2): fatal error C1083: Cannot open include file: 'glm\glm.hpp': No such file or directory
+  Location.cpp
+c:\code\school\graphics\graphics_4\forclass3d\location.h(1): fatal error C1083: Cannot open include file: 'glm\glm.hpp': No such file or directory
+  main.cpp
+c:\code\school\graphics\graphics_4\forclass3d\display.h(5): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+  Scene.cpp
+c:\code\school\graphics\graphics_4\forclass3d\scene.h(1): fatal error C1083: Cannot open include file: 'glm\glm.hpp': No such file or directory
+  texture.cpp
+c:\code\school\graphics\graphics_4\forclass3d\texture.cpp(2): fatal error C1083: Cannot open include file: 'GL\glew.h': No such file or directory
+  Wall.cpp
+c:\code\school\graphics\graphics_4\forclass3d\wall.h(1): fatal error C1083: Cannot open include file: 'glm\glm.hpp': No such file or directory
