@@ -3,14 +3,13 @@
 
 Joint::Joint(Joint* prev, mat4* Tarm, mat4 P, mat4* Tscene, mat4* Rscene, Camera* camera):
 	_prev(prev),
-	_Thight(glm::translate(vec3(0,0,-4 ))), _Tarm(Tarm),_S(scale(vec3(1.0f, 1.0f, 2.0f))), _P(P),
+	_Thight(glm::translate(vec3(0,0 , 4 ))), _Tarm(Tarm),_S(scale(vec3(1.0f, 1.0f, 2.0f))), _P(P),
 	_Tscene(Tscene),
 	_Rscene(Rscene),
 	_camera(camera){}
 mat4 Joint::getMVP()
 {
-	mat4 base = glm::translate(vec3(0,0,-1));
-	return _P*(*_Tscene)*(*_Rscene)*(*_Tarm)*getPrev()*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S*base;
+	return _P*(*_Tscene)*(*_Rscene)*(*_Tarm)*getPrev()*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S*_base;
 }
 
 mat4 Joint::getPrev()
@@ -25,8 +24,7 @@ mat4 Joint::getPrev()
 
 mat4 Joint::getM()
 {
-	mat4 base = glm::translate(vec3(0, 0, -1));
-	return (*_Tscene)*(*_Tarm)*getPrev()*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S*base;
+	return (*_Tscene)*(*_Tarm)*getPrev()*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S*_base;
 }
 
 mat4 Joint::getR()
@@ -36,12 +34,12 @@ mat4 Joint::getR()
 
 vec3 Joint::getRoot()
 {
-	return (vec3)(getM() * vec4(0, 0, 1.0, 1.0));
+	return (vec3)(getM() * vec4(0, 0, -1, 1.0));
 }
 
 vec3 Joint::getEnd()
 {
-	return (vec3)(getM() * vec4(0, 0, -1, 1));
+	return (vec3)(getM() * vec4(0, 0, 1, 1));
 }
 
 void Joint::setPickingColor(vec4 pickingColor)
@@ -101,15 +99,15 @@ void Joint::printEulerEngles()
 	print_matrix(_solverPsi);
 }
 
-void Joint::rotateTheta(float theta)
+void Joint::rotateTheta(vec3 axis, float theta)
 {
-	_Rtheta = glm::rotate(_Rtheta, theta, vec3(1, 0, 0));
+	_Rtheta = glm::rotate(_Rtheta, theta, axis);
 }
 void Joint::rotatePsi(float psi)
 {
 	_Rpsi = glm::rotate(_Rpsi, psi, vec3(0, 0, -1));
 }
-void Joint::rotatePhi(float phi)
+void Joint::rotatePhi(vec3 axis, float phi)
 {
-	_Rphi = glm::rotate(_Rphi, phi, vec3(0, 0, 1));
+	_Rphi = glm::rotate(_Rphi, phi, axis);
 }

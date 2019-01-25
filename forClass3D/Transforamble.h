@@ -2,6 +2,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 using namespace glm;
+static const vec4 STANDARD_X = vec4(1, 0, 0, 0);
+static const vec4 STANDARD_Y = vec4(0, 1, 0, 0);
+static const vec4 STANDARD_Z = vec4(0, 0, 1, 0);
 class Transformable {
 public:
 	// pure virtual function

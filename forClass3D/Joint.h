@@ -25,15 +25,16 @@ public:
 	virtual void translate(vec3 trans);
 	virtual void zoom(bool in, float delta);
 	virtual void printEulerEngles();
-	void rotateTheta(float theta);
+	void rotateTheta(vec3 axis, float theta);
 	void rotatePsi(float psi);
-	void rotatePhi(float phi);
+	void rotatePhi(vec3 axis,float phi);
 private:
 	mat4 _Rjunk;
 	mat4 _Thight;
 	mat4* _Rscene;
 	mat4* _Tscene;
 	mat4 _S;
+	mat4 _base = glm::translate(vec3(0,0,1));
 	mat4* _Tarm;
 	mat4 _P;
 	Camera* _camera;
