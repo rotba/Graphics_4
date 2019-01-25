@@ -63,34 +63,29 @@ void Scene::solve()
 	vec3 e_angles_ang = vec3(degrees(e_angles_rad.x), degrees(e_angles_rad.y), degrees(e_angles_rad.z));
 	int x = 1;
 	if (EULER) {
-		/*float theta = 0;
-		float phi = 0;
-		if (RD.x==0 && RD.y ==0){ 
-			theta =a;
-			joints[curr_joint]->rotateX(true, theta);
-		}
-		else if (RE.x == 0 && RE.y == 0) {
-			theta = a;
-			joints[curr_joint]->rotateX(D.x > 0 , theta/2 );
-			vec3 RE_tag = normalize(_arm.getEnd() - R);
-			phi = calculatePhi(RE_tag, RD);
-			joints[curr_joint]->rotateZ(true, phi);
-			int x = 1;
-		}else {
-			theta = calculateTheta(RE,RD);
-			bool antiClockwise = antiClockwiseTheta(RE, RD, joints[curr_joint]);
-			joints[curr_joint]->rotateX(antiClockwise, theta/2);
-			vec3 RE_tag = normalize(joints[curr_joint]->getEnd() - R);
-			phi = calculatePhi(RE_tag, RD);
-			joints[curr_joint]->rotateZ(true, phi);
-		}*/
-		mat4 theta = glm::rotate(e_angles_ang.x, vec3(-1,0,0));
+		Joint* curr_j = joints[0];
+		vec3 W = normalize((vec3)(STANDARD_Z * curr_j->getM()));
+		vec3 U = normalize((vec3)(STANDARD_X * curr_j->getM()));
+		vec3 M_RD = normalize((vec3)(vec4(RD,1) * curr_j->getM()));
+		vec3 axis = normalize(cross(M_RD, W));
+		float cos_PHI = dot(axis,U);
+		if (!valid_cos(cos_PHI)) return;
+		float PHI = degrees(acos(cos_PHI));
+		curr_j->rotatePhi(PHI);
+		W = normalize((vec3)(STANDARD_Z * curr_j->getM()));
+		M_RD = normalize((vec3)(vec4(RD, 1) * curr_j->getM()));
+		float cos_THETA = dot(M_RD, W);
+		if (!valid_cos(cos_THETA)) return;
+		float THETA = degrees(acos(cos_THETA));
+		//curr_j->rotateTheta(THETA/2);
+		//curr_j->rotatePsi(PHI);
+		/*mat4 theta = glm::rotate(e_angles_ang.x, vec3(-1,0,0));
 		mat4 psi = glm::rotate(e_angles_ang.y, vec3(0, -1, 0));
 		mat4 phi = glm::rotate(e_angles_ang.z, vec3(0, 0, -1));
 		joints[curr_joint]->rotateTheta(theta);
 		joints[curr_joint]->rotatePsi(psi);
 		joints[curr_joint]->rotatePhi(phi);
-		joints[curr_joint]->rotateTmp(phi*psi*theta);
+		joints[curr_joint]->rotateTmp(phi*psi*theta);*/
 	}
 	else {
 		joints[curr_joint]->rotate(a/2, axis);
@@ -140,6 +135,11 @@ bool Scene::antiClockwiseTheta(vec3 RE, vec3 RD, Joint* curr_joint)
 	float dot_product = dot(right, proj_RD);
 	return dot_product < 0;
 	return true;
+}
+
+bool Scene::valid_cos(float cos)
+{
+	return abs(cos)<=1;
 }
 
 mat4 Scene::getT()

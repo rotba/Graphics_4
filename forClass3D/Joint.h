@@ -25,9 +25,9 @@ public:
 	virtual void translate(vec3 trans);
 	virtual void zoom(bool in, float delta);
 	virtual void printEulerEngles();
-	void rotateTheta(mat4 theta);
-	void rotatePsi(mat4 theta);
-	void rotatePhi(mat4 theta);
+	void rotateTheta(float theta);
+	void rotatePsi(float psi);
+	void rotatePhi(float phi);
 private:
 	mat4 _Rjunk;
 	mat4 _Thight;

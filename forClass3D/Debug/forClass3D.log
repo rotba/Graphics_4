@@ -1,1 +1,3 @@
-﻿
+﻿  Scene.cpp
+c:\code\school\graphics\graphics_4\forclass3d\scene.h(20): warning C4305: 'initializing': truncation from 'double' to 'float'
+  forClass3D.vcxproj -> C:\Code\School\Graphics\Graphics_4\Debug\forClass3D.exe

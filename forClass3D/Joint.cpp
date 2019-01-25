@@ -101,15 +101,15 @@ void Joint::printEulerEngles()
 	print_matrix(_solverPsi);
 }
 
-void Joint::rotateTheta(mat4 theta)
+void Joint::rotateTheta(float theta)
 {
-	_solverTheta =  theta;
+	_Rtheta = glm::rotate(_Rtheta, theta, vec3(1, 0, 0));
 }
-void Joint::rotatePsi(mat4 psi)
+void Joint::rotatePsi(float psi)
 {
-	_solverPsi = psi;
+	_Rpsi = glm::rotate(_Rpsi, psi, vec3(0, 0, -1));
 }
-void Joint::rotatePhi(mat4 phi)
+void Joint::rotatePhi(float phi)
 {
-	_solverPhi = phi;
+	_Rphi = glm::rotate(_Rphi, phi, vec3(0, 0, 1));
 }

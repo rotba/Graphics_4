@@ -14,6 +14,9 @@ static const vec3 UP = vec3(0,0,-1);
 static const vec3 FORWARD = vec3(0, 1, 0);
 static const vec3 POSITION = vec3(0, -15, 0);
 static const vec3 CENTER = vec3(0, 0, -5);
+static const vec4 STANDARD_X = vec4(1, 0, 0, 0);
+static const vec4 STANDARD_Y = vec4(0, 1, 0, 0);
+static const vec4 STANDARD_Z = vec4(0, 0, 1, 0);
 static const float EPSILON = 0.3;
 static float EULER = false;
 static vec4 J0_PC;
@@ -63,6 +66,7 @@ private:
 	float calculateTheta(vec3 RE, vec3 RD);
 	bool antiClockwiseTheta(vec3 RE, vec3 RD, Joint* curr_joint);
 	vec3 rotationMatrixToEulerAngles(mat4 M);
+	bool Scene::valid_cos(float cos);
 	mat4 _T;
 	mat4 _R;
 	mat4 _Rjunk;
