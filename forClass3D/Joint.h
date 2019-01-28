@@ -26,7 +26,7 @@ public:
 	virtual void zoom(bool in, float delta);
 	virtual void printEulerEngles();
 	void rotateTheta(vec3 axis, float theta);
-	void rotatePsi(float psi);
+	void rotatePsi(vec3 axis, float psi);
 	void rotatePhi(vec3 axis,float phi);
 private:
 	mat4 _Rjunk;

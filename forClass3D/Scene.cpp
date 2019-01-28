@@ -11,7 +11,8 @@ Scene::Scene(Mesh* cube_mesh, Mesh* rf_mesh, Shader* shader, Shader* picking_sha
 	_cube_mesh(cube_mesh),
 	_rf_mesh(rf_mesh),
 	_shader(shader),
-	_picking_shader(picking_shader) 
+	_picking_shader(picking_shader),
+	_curr_joint(3)
 {
 	generatePickingColors();
 	_arm._joint_0.setPickingColor(J0_PC);
@@ -50,9 +51,11 @@ void Scene::solve()
 	joints[1] = &_arm._joint_1;
 	joints[2] = &_arm._joint_2;
 	joints[3] = &_arm._joint_3;
+	Joint* curr_j = joints[_curr_joint];
+	curr_j = joints[_curr_joint];
 	vec3 D = _box.getCenter();
-	vec3 R = joints[curr_joint]->getRoot();
-	vec3 E_tag = joints[curr_joint]->getEnd();
+	vec3 R = curr_j->getRoot();
+	vec3 E_tag = curr_j->getEnd();
 	vec3 E = _arm.getEnd();
 	vec3 RD = normalize(D-R);
 	vec3 RE = normalize(E-R);
@@ -61,25 +64,38 @@ void Scene::solve()
 	mat4 rot_mat = glm::rotate(a/2,axis);
 	vec3 e_angles_rad = rotationMatrixToEulerAngles(rot_mat);
 	vec3 e_angles_ang = vec3(degrees(e_angles_rad.x), degrees(e_angles_rad.y), degrees(e_angles_rad.z));
-	int x = 1;
 	if (EULER) {
-		Joint* curr_j = joints[0];
-		vec3 W = normalize((vec3)(curr_j->getM() * STANDARD_Z));
-		vec3 U = normalize((vec3)(curr_j->getM() * STANDARD_X ));
-		vec3 M_RD = normalize((vec3)(curr_j->getM()*vec4(RD, 1)));
-		vec3 axis = normalize(cross(W,M_RD));
+		vec3 W = normalize(((vec3)(curr_j->getM() * STANDARD_Z)));
+		vec3 U = normalize(((vec3)(curr_j->getM() * STANDARD_X )));
+		//vec3 M_RD = normalize(((vec3)(curr_j->getM()*vec4(RD, 1))));
+		vec3 axis = normalize(cross(W, RD));
 		float cos_PHI = dot(axis,U);
 		if (!valid_cos(cos_PHI)) return;
 		float PHI = degrees(acos(cos_PHI));
 		curr_j->rotatePhi(normalize(cross(U, axis)),PHI);
+		if (_curr_joint!=3) {
+			Joint* next = joints[_curr_joint + 1];
+			U = normalize(((vec3)(curr_j->getM() * STANDARD_X)));
+			next->rotatePhi(normalize(cross(U, axis)), PHI);
+		}
 		W = normalize((vec3)( curr_j->getM() * STANDARD_Z));
 		U = normalize((vec3)(curr_j->getM() * STANDARD_X));
-		M_RD = normalize((vec3)(curr_j->getM() * vec4(RD, 1)));
-		float cos_THETA = dot(M_RD, W);
+		//M_RD = normalize((vec3)(curr_j->getM() * vec4(RD, 1)));
+		float cos_THETA = dot(RD, W);
 		if (!valid_cos(cos_THETA)) return;
 		float THETA = degrees(acos(cos_THETA));
+		if (_curr_joint != 3) {
+			Joint* next = joints[_curr_joint + 1];
+			U = normalize(((vec3)(curr_j->getM() * STANDARD_X)));
+			next->rotatePhi(normalize(cross(U, axis)), -PHI);
+		}
 		curr_j->rotateTheta(U , THETA/2);
-		//curr_j->rotatePsi(PHI);
+		W = normalize((vec3)(curr_j->getM() * STANDARD_Z));
+		curr_j->rotatePsi(-W ,PHI);
+		if (_curr_joint != 3) {
+			Joint* next = joints[_curr_joint + 1];
+			//next->rotatePhi(normalize(cross(U, axis)), -PHI);
+		}
 		/*mat4 theta = glm::rotate(e_angles_ang.x, vec3(-1,0,0));
 		mat4 psi = glm::rotate(e_angles_ang.y, vec3(0, -1, 0));
 		mat4 phi = glm::rotate(e_angles_ang.z, vec3(0, 0, -1));
@@ -89,15 +105,9 @@ void Scene::solve()
 		joints[curr_joint]->rotateTmp(phi*psi*theta);*/
 	}
 	else {
-		joints[curr_joint]->rotate(a/2, axis);
+		joints[_curr_joint]->rotate(a/2, axis);
 	}
 	vec3 check = _arm.getEnd();
-	if (curr_joint == 0) {
-		curr_joint = 3;
-	}
-	else {
-		curr_joint -=1;
-	}
 }
 float Scene::calculatePhi(vec3 RE, vec3 RD)
 {
@@ -218,6 +228,16 @@ mat4 Scene::getM()
 void Scene::updateChildren()
 {
 	_R= _Rpsi* _Rtheta*_Rphi*_Rjunk*_S;
+}
+
+void Scene::changeJoint()
+{
+	if (_curr_joint == 0) {
+		_curr_joint = 3;
+	}
+	else {
+		_curr_joint -= 1;
+	}
 }
 
 bool Scene::isDone()

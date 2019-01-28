@@ -103,9 +103,9 @@ void Joint::rotateTheta(vec3 axis, float theta)
 {
 	_Rtheta = glm::rotate(_Rtheta, theta, axis);
 }
-void Joint::rotatePsi(float psi)
+void Joint::rotatePsi(vec3 axis, float psi)
 {
-	_Rpsi = glm::rotate(_Rpsi, psi, vec3(0, 0, -1));
+	_Rpsi = glm::rotate(_Rpsi, psi, axis);
 }
 void Joint::rotatePhi(vec3 axis, float phi)
 {

@@ -108,9 +108,10 @@ int main(int argc, char** argv)
 	while (!glfwWindowShouldClose(display.m_window))
 	{
 		if (data._solve) {
-			if (!scene.isDone() && solver_softer >=SOLVER_SOFTER) {
+			if (!scene.isDone() && solver_softer >= SOLVER_SOFTER) {
 				display.Clear(1.0f, 1.0f, 1.0f, 1.0f);
 				scene.solve();
+				scene.changeJoint();
 				scene.render();
 				display.SwapBuffers();
 				scene.updatePickingShader();

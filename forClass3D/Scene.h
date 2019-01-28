@@ -12,7 +12,7 @@ static const int DISPLAY_HEIGHT = 600;
 static const int SOLVER_SOFTER = 500;
 static const vec3 UP = vec3(0,0,1);
 static const vec3 FORWARD = vec3(0, -1, 0);
-static const vec3 POSITION = vec3(0, 20, 0);
+static const vec3 POSITION = vec3(0, 30, 0);
 static const vec3 CENTER = vec3(0, 0, 0);
 static const float EPSILON = 0.3;
 static float EULER = false;
@@ -55,7 +55,7 @@ public:
 	Box _box;
 	Mesh* _cube_mesh;
 	void updatePickingShader();
-	int curr_joint = 3;
+	void changeJoint();
 	virtual ~Scene();
 private:
 	void updateChildren();
@@ -74,4 +74,5 @@ private:
 	Texture* _box_tex;
 	Shader* _shader;
 	Shader* _picking_shader;
+	int _curr_joint;
 };
