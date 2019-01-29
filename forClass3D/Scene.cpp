@@ -52,7 +52,6 @@ void Scene::solve()
 	joints[2] = &_arm._joint_2;
 	joints[3] = &_arm._joint_3;
 	Joint* curr_j = joints[_curr_joint];
-	curr_j = joints[_curr_joint];
 	vec3 D = _box.getCenter();
 	vec3 R = curr_j->getRoot();
 	vec3 E_tag = curr_j->getEnd();
@@ -61,48 +60,49 @@ void Scene::solve()
 	vec3 RE = normalize(E-R);
 	float a = degrees(acos(dot(RD, RE)));
 	vec3 axis = normalize(cross(RD, -RE));
-	mat4 rot_mat = glm::rotate(a/2,axis);
+	/*mat4 rot_mat = glm::rotate(a/2,axis);
 	vec3 e_angles_rad = rotationMatrixToEulerAngles(rot_mat);
-	vec3 e_angles_ang = vec3(degrees(e_angles_rad.x), degrees(e_angles_rad.y), degrees(e_angles_rad.z));
+	vec3 e_angles_ang = vec3(degrees(e_angles_rad.x), degrees(e_angles_rad.y), degrees(e_angles_rad.z));*/
 	if (EULER) {
-		vec3 W = normalize(((vec3)(curr_j->getM() * STANDARD_Z)));
-		vec3 U = normalize(((vec3)(curr_j->getM() * STANDARD_X )));
-		//vec3 M_RD = normalize(((vec3)(curr_j->getM()*vec4(RD, 1))));
+		vec3 W = curr_j->getW();
+		vec3 U = curr_j->getU();
 		vec3 axis = normalize(cross(W, RD));
 		float cos_PHI = dot(axis,U);
 		if (!valid_cos(cos_PHI)) return;
 		float PHI = degrees(acos(cos_PHI));
-		curr_j->rotatePhi(normalize(cross(U, axis)),PHI);
+		vec3 tmp = normalize(cross(U, axis));
+		curr_j->rotatePhi(tmp,PHI);
+		float THE_ROTATION_WAS_WITH_W_DIRECTION = dot(normalize(cross(U, axis)), W);
 		if (_curr_joint!=3) {
 			Joint* next = joints[_curr_joint + 1];
-			U = normalize(((vec3)(curr_j->getM() * STANDARD_X)));
+			U = curr_j->getU();
 			next->rotatePhi(normalize(cross(U, axis)), PHI);
 		}
-		W = normalize((vec3)( curr_j->getM() * STANDARD_Z));
-		U = normalize((vec3)(curr_j->getM() * STANDARD_X));
-		//M_RD = normalize((vec3)(curr_j->getM() * vec4(RD, 1)));
-		float cos_THETA = dot(RD, W);
+		W = curr_j->getW();
+		U = curr_j->getU();
+		E = _arm.getEnd();
+		RE = normalize(E - R);
+		float cos_THETA = dot(RD, RE);
 		if (!valid_cos(cos_THETA)) return;
 		float THETA = degrees(acos(cos_THETA));
 		if (_curr_joint != 3) {
 			Joint* next = joints[_curr_joint + 1];
-			U = normalize(((vec3)(curr_j->getM() * STANDARD_X)));
+			U = curr_j->getU();
 			next->rotatePhi(normalize(cross(U, axis)), -PHI);
 		}
 		curr_j->rotateTheta(U , THETA/2);
-		W = normalize((vec3)(curr_j->getM() * STANDARD_Z));
-		curr_j->rotatePsi(-W ,PHI);
+		W = curr_j->getW();
+		U = curr_j->getU();
+		if (THE_ROTATION_WAS_WITH_W_DIRECTION > 0) {
+			curr_j->rotatePsi(-W, PHI);
+		}
+		else {
+			curr_j->rotatePsi(W, PHI);
+		}
 		if (_curr_joint != 3) {
 			Joint* next = joints[_curr_joint + 1];
 			//next->rotatePhi(normalize(cross(U, axis)), -PHI);
 		}
-		/*mat4 theta = glm::rotate(e_angles_ang.x, vec3(-1,0,0));
-		mat4 psi = glm::rotate(e_angles_ang.y, vec3(0, -1, 0));
-		mat4 phi = glm::rotate(e_angles_ang.z, vec3(0, 0, -1));
-		joints[curr_joint]->rotateTheta(theta);
-		joints[curr_joint]->rotatePsi(psi);
-		joints[curr_joint]->rotatePhi(phi);
-		joints[curr_joint]->rotateTmp(phi*psi*theta);*/
 	}
 	else {
 		joints[_curr_joint]->rotate(a/2, axis);

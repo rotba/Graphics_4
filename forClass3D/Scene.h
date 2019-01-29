@@ -9,7 +9,7 @@
 
 static const int DISPLAY_WIDTH = 800;
 static const int DISPLAY_HEIGHT = 600;
-static const int SOLVER_SOFTER = 500;
+static const int SOLVER_SOFTER = 10000;
 static const vec3 UP = vec3(0,0,1);
 static const vec3 FORWARD = vec3(0, -1, 0);
 static const vec3 POSITION = vec3(0, 30, 0);
@@ -75,4 +75,5 @@ private:
 	Shader* _shader;
 	Shader* _picking_shader;
 	int _curr_joint;
+	int  _flag = 0;
 };

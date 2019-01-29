@@ -6,6 +6,9 @@
 #include "Camera.h"
 using namespace glm;
 using namespace std;
+static const vec4 ORIGIN = vec4(0, 0, -1, 1);
+static const vec4 Z_HAT = vec4(0, 0, 1, 1);
+static const vec4 X_HAT = vec4(1, 0, -1, 1);
 class Joint: public Transformable
 {
 public:
@@ -14,6 +17,7 @@ public:
 	mat4 getPrev();
 	mat4 getM();
 	mat4 getR();
+	mat4 getR2();
 	vec3 getRoot();
 	vec3 getEnd();
 	void setPickingColor(vec4 pickingColor);
@@ -25,6 +29,8 @@ public:
 	virtual void translate(vec3 trans);
 	virtual void zoom(bool in, float delta);
 	virtual void printEulerEngles();
+	vec3 getW();
+	vec3 getU();
 	void rotateTheta(vec3 axis, float theta);
 	void rotatePsi(vec3 axis, float psi);
 	void rotatePhi(vec3 axis,float phi);

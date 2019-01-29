@@ -26,6 +26,10 @@ mat4 Joint::getM()
 {
 	return (*_Tscene)*(*_Tarm)*getPrev()*_Rpsi*_Rtheta*_Rphi*_Rjunk*_S*_base;
 }
+mat4 Joint::getR2()
+{
+	return (*_Tscene)*(*_Tarm)*getPrev()*_Rpsi*_Rtheta*_Rphi*_Rjunk*_base;
+}
 
 mat4 Joint::getR()
 {
@@ -34,7 +38,7 @@ mat4 Joint::getR()
 
 vec3 Joint::getRoot()
 {
-	return (vec3)(getM() * vec4(0, 0, -1, 1.0));
+	return (vec3)(getM() * ORIGIN);
 }
 
 vec3 Joint::getEnd()
@@ -99,15 +103,32 @@ void Joint::printEulerEngles()
 	print_matrix(_solverPsi);
 }
 
+vec3 Joint::getW()
+{
+	vec3 origin_tag = (vec3)(getM() * ORIGIN);
+	vec3 z_hat_tag = (vec3)(getM() * Z_HAT);
+	return normalize(z_hat_tag - origin_tag);
+}
+
+vec3 Joint::getU()
+{
+	vec3 origin_tag = (vec3)(getM() * ORIGIN);
+	vec3 x_hat_tag = (vec3)(getM() * X_HAT);
+	return normalize(x_hat_tag - origin_tag);
+}
+
 void Joint::rotateTheta(vec3 axis, float theta)
 {
-	_Rtheta = glm::rotate(_Rtheta, theta, axis);
+	//_Rtheta = glm::rotate(_Rtheta, theta, axis);
+	_Rjunk = glm::rotate(theta, axis) * _Rjunk;
 }
 void Joint::rotatePsi(vec3 axis, float psi)
 {
-	_Rpsi = glm::rotate(_Rpsi, psi, axis);
+	//_Rpsi = glm::rotate(_Rpsi, psi, axis);
+	_Rjunk = glm::rotate(psi, axis)* _Rjunk;
 }
 void Joint::rotatePhi(vec3 axis, float phi)
 {
-	_Rphi = glm::rotate(_Rphi, phi, axis);
+	//_Rphi = glm::rotate(_Rphi, phi, axis);
+	_Rjunk = glm::rotate(phi, axis) * _Rjunk;
 }
