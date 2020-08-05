@@ -120,15 +120,17 @@ vec3 Joint::getU()
 void Joint::rotateTheta(vec3 axis, float theta)
 {
 	//_Rtheta = glm::rotate(_Rtheta, theta, axis);
-	_Rjunk = glm::rotate(theta, axis) * _Rjunk;
+	//_Rjunk = glm::rotate(theta, axis) * _Rjunk;
+	_Rtheta = glm::rotate(_Rtheta, theta, vec3(1, 0, 0));
 }
 void Joint::rotatePsi(vec3 axis, float psi)
 {
 	//_Rpsi = glm::rotate(_Rpsi, psi, axis);
-	_Rjunk = glm::rotate(psi, axis)* _Rjunk;
+	_Rpsi = glm::rotate(_Rpsi, psi, vec3(0, 0, -1));
 }
 void Joint::rotatePhi(vec3 axis, float phi)
 {
 	//_Rphi = glm::rotate(_Rphi, phi, axis);
-	_Rjunk = glm::rotate(phi, axis) * _Rjunk;
+	//_Rjunk = glm::rotate(phi, axis) * _Rjunk;
+	_Rphi = glm::rotate(_Rphi, phi, vec3(0, 0, 1 ));
 }

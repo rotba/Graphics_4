@@ -105,8 +105,15 @@ int main(int argc, char** argv)
 	scene.updatePickingShader();
 	glfwSetInputMode(display.m_window, GLFW_STICKY_KEYS, 0);
 	int solver_softer = 1000;
+	vec3  W = scene._arm._joint_3.getW();
 	while (!glfwWindowShouldClose(display.m_window))
 	{
+		/*display.Clear(1.0f, 1.0f, 1.0f, 1.0f);
+		Sleep(10);
+		scene._arm._joint_3.rotatePhi(W, -0.5);
+		scene.render();
+		display.SwapBuffers();
+		scene.updatePickingShader();*/
 		if (data._solve) {
 			if (!scene.isDone() && solver_softer >= SOLVER_SOFTER) {
 				display.Clear(1.0f, 1.0f, 1.0f, 1.0f);

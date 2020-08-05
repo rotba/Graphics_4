@@ -51,6 +51,7 @@ void Scene::solve()
 	joints[1] = &_arm._joint_1;
 	joints[2] = &_arm._joint_2;
 	joints[3] = &_arm._joint_3;
+	_curr_joint = 3;
 	Joint* curr_j = joints[_curr_joint];
 	vec3 D = _box.getCenter();
 	vec3 R = curr_j->getRoot();
@@ -70,9 +71,15 @@ void Scene::solve()
 		float cos_PHI = dot(axis,U);
 		if (!valid_cos(cos_PHI)) return;
 		float PHI = degrees(acos(cos_PHI));
-		vec3 tmp = normalize(cross(U, axis));
-		curr_j->rotatePhi(tmp,PHI);
-		float THE_ROTATION_WAS_WITH_W_DIRECTION = dot(normalize(cross(U, axis)), W);
+		bool WITH_W_DIRECTION = dot(normalize(cross(U, axis)), W) >0 ;
+		//vec3 tmp = normalize(cross(U, axis));
+		vec3 tmp = W;
+		if (WITH_W_DIRECTION) {
+			curr_j->rotatePhi(tmp, PHI);
+		}
+		else {
+			curr_j->rotatePhi(-tmp, -PHI);
+		}
 		if (_curr_joint!=3) {
 			Joint* next = joints[_curr_joint + 1];
 			U = curr_j->getU();
@@ -93,11 +100,11 @@ void Scene::solve()
 		curr_j->rotateTheta(U , THETA/2);
 		W = curr_j->getW();
 		U = curr_j->getU();
-		if (THE_ROTATION_WAS_WITH_W_DIRECTION > 0) {
-			curr_j->rotatePsi(-W, PHI);
+		if (WITH_W_DIRECTION) {
+			curr_j->rotatePhi(-W, -PHI);
 		}
 		else {
-			curr_j->rotatePsi(W, PHI);
+			curr_j->rotatePhi(W, PHI);
 		}
 		if (_curr_joint != 3) {
 			Joint* next = joints[_curr_joint + 1];
