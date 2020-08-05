@@ -1,4 +1,4 @@
-# Inverse Kinematics
+# Inverse & Forward Kinematics
 
 Excecise in implemenation of inverse kinematics. 
 
@@ -10,11 +10,15 @@ The challenge and the interesting part is that the object is constituen from lin
 Here we can see the expected outcome of manipulating some internal link.
 
 The way we implemented interaction between the links is by using forward kinematics techniqe to calculate the matrix of each object (translation and rotation).
+
 ![Image of Yaktocat](https://octodex.github.com/images/forward1.png)
+
 ![Image of Yaktocat](https://octodex.github.com/images/forward2.png)
 
-The second task was to implement an algorithm to make the arm find the other box object in the scene, and to do so we used the inverse kinematics approach
+The second task was to implement an algorithm to make the arm find the other box object in the scene, and to do so we used the inverse kinematics approach:
+
 ![Image of Yaktocat](https://octodex.github.com/images/inverse.png)
+
 Here we can see the result of this algorithm (obtained by clicking the space button).
 
 You can clone this repository to play with our arm! Just double click the inverse_kinematics.lnk.
